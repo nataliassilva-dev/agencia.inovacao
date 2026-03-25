@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agência UNEB de Inovação</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div id="app">
+
+<!-- BARRA DE ACESSIBILIDADE --> 
+ <div class="accessibility-bar"> 
+  <div class="accessibility-container"> 
+    <div class="access-label">Acessibilidade: </div> 
+    <div class="access-links"> 
+      <a href="#acesso-rapido">Ir para o conteúdo</a> 
+      <a href="#rodape">Ir para o rodapé</a> 
+      <a href="https://www.gov.br/" target="_blank">Sites do Governo</a> </div> 
+      <div class="access-controls"> 
+        <button id="decrease-font">A-</button> 
+        <button id="increase-font">A+</button> 
+        <button id="toggle-contrast">Alto Contraste</button> 
+        <button id="vlibras-btn" onclick="window.open('https://www.vlibras.gov.br/', '_blank')">VLibras</button> 
+      </div> 
+    </div> 
+  </div>
+
+<!-- =============================================
+     NAVBAR
+     Presente em ambas as páginas.
+     data-page muda via JS ao clicar nos links.
+============================================= -->
+<nav class="navbar" id="navbar">
+  <span class="navbar-brand">Agência UNEB</span>
+
+  <!-- Campo de busca visível só em Projetos -->
+  <div class="navbar-search" id="navSearch">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Buscar ativos...">
+  </div>
+
+  <ul class="navbar-links" id="navLinks">
+    <li><a href="#" class="active" data-target="home" onclick="navigate(event,'home')">Início</a></li>
+    <li><a href="#" data-target="projetos" onclick="navigate(event,'projetos')">Projetos</a></li>
+    <li><a href="#" data-target="editais" onclick="navigate(event,'editais')">Editais</a></li>
+    <li><a href="#" data-target="propriedade-intelectual" onclick="navigate(event,'propriedade-intelectual')">Propriedade Intelectual</a></li>
+    <li><a href="#" data-target="contato" onclick="navigate(event,'contato')">Contato</a></li>
+  </ul>
+
+  <button class="btn-cta" onclick="navigate(event,'home')">Inovar Agora</button>
+
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" onclick="toggleMenu()">
+    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M3 12h18M3 6h18M3 18h18"/>
+    </svg>
+  </button>
+</nav>
+
+<!-- =============================================
+     PÁGINA: HOME
+============================================= -->
+<div class="page page--active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="badge">Inovação Acadêmica</span>
+      <h1>Conectando<br>Conhecimento<br>e <span>Inovação</span></h1>
+      <p>A Agência UNEB de Inovação transforma o potencial científico da academia em soluções tecnológicas de alto impacto para a sociedade.</p>
+      <div class="hero-buttons">
+        <button class="btn-primary" onclick="navigate(event,'projetos')">
+          Conheça nossos Editais
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button class="btn-outline" onclick="navigate(event,'projetos')">Portfólio de Patentes</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section class="section section--light">
+    <div class="section-label">Serviços Estratégicos</div>
+    <div class="section-title">Apoio em toda a jornada inovadora</div>
+
+    <div class="services-grid">
+      <div class="service-card animate animate-d1">
+        <div class="service-icon">
+          <!-- Ícone escudo: Propriedade Intelectual -->
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <h3>Propriedade Intelectual</h3>
+        <p>Proteção legal para suas invenções, marcas, softwares e desenhos industriais desenvolvidos no âmbito acadêmico.</p>
+        <a href="#" class="link-more">
+          Saiba mais
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+
+      <div class="service-card animate animate-d2">
+        <div class="service-icon">
+          <!-- Ícone handshake: Transferência de Tecnologia -->
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M20.42 4.58a5.4 5.4 0 00-7.65 0l-.77.78-.77-.78a5.4 5.4 0 00-7.65 7.65l.77.78 7.65 7.65 7.65-7.65.78-.78a5.4 5.4 0 000-7.65z"/>
+          </svg>
+        </div>
+        <h3>Transferência de Tecnologia</h3>
+        <p>Intermediação entre a universidade e empresas para aplicação prática de conhecimentos e licenciamento tecnológico.</p>
+        <a href="#" class="link-more">
+          Saiba mais
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+
+      <div class="service-card animate animate-d3">
+        <div class="service-icon">
+          <!-- Ícone foguete: Incubação de Startups -->
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z"/>
+            <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/>
+            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+          </svg>
+        </div>
+        <h3>Incubação de Startups</h3>
+        <p>Apoio operacional e mentoria para o nascimento e crescimento de empresas de base tecnológica originadas na UNEB.</p>
+        <a href="#" class="link-more">
+          Saiba mais
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- VITRINE TECNOLÓGICA -->
+  <section class="section section--gray">
+    <div class="vitrine-header animate">
+      <div>
+        <div class="section-label">Vitrine de Inovação</div>
+        <div class="section-title" style="margin-bottom:8px;">Destaques Tecnológicos</div>
+        <p>Conheça as patentes e tecnologias prontas para licenciamento e impacto comercial.</p>
+      </div>
+      <button class="btn-ghost" onclick="navigate(event,'projetos')">Ver portfólio completo</button>
+    </div>
+
+    <!-- Bento grid assimétrico -->
+    <div class="bento-grid animate">
+
+      <!-- Card grande (esquerda, 2 linhas) -->
+      <div class="bento-card bento-large" onclick="navigate(event,'projetos')">
+        <div class="bento-card-bg" style="background-image:url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=900&q=80')"></div>
+        <div class="bento-card-overlay"></div>
+        <div class="bento-card-content">
+          <span class="card-badge">Biotecnologia</span>
+          <div class="bento-card-title">Novo Biopolímero Sustentável</div>
+          <div class="bento-card-desc">Tecnologia desenvolvida para substituição de plásticos convencionais na indústria farmacêutica.</div>
+        </div>
+      </div>
+
+      <!-- 3 cards menores (direita) -->
+      <div class="bento-right">
+
+        <!-- Card médio com foto (superior, ocupa 2 colunas) -->
+        <div class="bento-card bento-medium" style="min-height:200px;" onclick="navigate(event,'projetos')">
+          <div class="bento-card-bg" style="background-image:url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80')"></div>
+          <div class="bento-card-overlay"></div>
+          <div class="bento-card-content">
+            <span class="card-badge">Hardware</span>
+            <div class="bento-card-title">Processador de Baixo Custo para IoT</div>
+          </div>
+        </div>
+
+        <!-- Card sólido ciano (ícone) -->
+        <div class="bento-card bento-card--solid" onclick="navigate(event,'projetos')">
+          <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+            <path d="M7 7h10M7 11h6"/>
+          </svg>
+          <h3>Software de Telemedicina</h3>
+        </div>
+
+        <!-- Card com foto: Células Fotovoltaicas -->
+        <div class="bento-card" style="min-height:180px;" onclick="navigate(event,'projetos')">
+          <div class="bento-card-bg" style="background-image:url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=80')"></div>
+          <div class="bento-card-overlay"></div>
+          <div class="bento-card-content">
+            <span class="card-badge">Energia</span>
+            <div class="bento-card-title">Células Fotovoltaicas Orgânicas</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNER CTA -->
+  <section class="cta-section animate">
+    <h2>Pronto para transformar sua<br>pesquisa em realidade?</h2>
+    <p>Nossa equipe de especialistas está pronta para orientar seu projeto no caminho da inovação e mercado.</p>
+    <div class="cta-buttons">
+      <button class="btn-white">Falar com Consultor</button>
+      <button class="btn-outline-white" onclick="navigate(event,'projetos')">Acessar Editais Abertos</button>
+    </div>
+  </section>
+
+  <!-- FOOTER HOME -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">Agência UNEB</div>
+        <p class="footer-brand-desc">Impulsionando a inovação e o desenvolvimento tecnológico no estado da Bahia através da pesquisa acadêmica e parcerias industriais.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navegação</div>
+        <ul class="footer-links">
+          <li><a href="#" onclick="navigate(event,'home')">Sobre Nós</a></li>
+          <li><a href="#" class="active-link" onclick="navigate(event,'projetos')">Ativos Tecnológicos</a></li>
+          <li><a href="#">Editais Abertos</a></li>
+          <li><a href="#">Projetos em Destaque</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <ul class="footer-links">
+          <li><a href="#">Privacidade</a></li>
+          <li><a href="#">Termos de Uso</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Portal UNEB</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Newsletter</div>
+        <p class="newsletter-desc">Receba atualizações sobre novas tecnologias e patentes.</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Seu e-mail">
+          <button type="button" aria-label="Enviar">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 Agência UNEB de Inovação. Todos os direitos reservados.</div>
+  </footer>
+
+</div><!-- fim #page-home -->
+
+<!-- =============================================
+     PÁGINA: PROJETOS
+============================================= -->
+<div class="page" id="page-projetos">
+
+  <!-- Cabeçalho da página -->
+  <header class="projects-header">
+    <div class="projects-label">Portfólio Tecnológico</div>
+    <div class="projects-title-row">
+      <h1 class="projects-title">Ativos de <span>Inovação.</span></h1>
+      <div class="assets-counter">
+        <div class="assets-counter-icon">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
+          </svg>
+        </div>
+        <div>
+          <div class="assets-counter-num" id="assetCount">119</div>
+          <div class="assets-counter-label">Ativos Registrados</div>
+        </div>
+      </div>
+    </div>
+    <p class="projects-desc">Explore o catálogo de patentes, softwares e tecnologias desenvolvidas pela UNEB disponíveis para transferência e parcerias estratégicas.</p>
+  </header>
+
+  <!-- Barra de filtros + ordenação (sticky) -->
+  <div class="projects-toolbar">
+    <div class="filter-chips" id="filterChips">
+      <button class="chip active" data-filter="todos">Todos</button>
+      <button class="chip" data-filter="patente">Patentes</button>
+      <button class="chip" data-filter="software">Software</button>
+      <button class="chip" data-filter="marca">Marcas</button>
+      <button class="chip" data-filter="desenho">Desenho Industrial</button>
+    </div>
+    <div class="sort-group">
+      <span>Ordenar por:</span>
+      <select class="sort-select" id="sortSelect">
+        <option>Mais recentes</option>
+        <option>Mais antigos</option>
+        <option>A–Z</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Grid de projetos -->
+  <div class="projects-grid-wrapper">
+    <div class="projects-grid" id="projectsGrid">
+      <!-- Preenchido via JS com os dados abaixo -->
+    </div>
+
+    <!-- Paginação -->
+    <p class="page-info" id="pageInfo">Exibindo 6 de 142 ativos</p>
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+  <!-- Banner "Não encontrou?" -->
+  <section class="not-found-section">
+    <h2>Não encontrou o que procurava?</h2>
+    <p>Nossa equipe de transferência tecnológica pode auxiliar na busca personalizada por soluções específicas ou no desenvolvimento de PD&amp;I conjunta.</p>
+    <div class="cta-buttons">
+      <button class="btn-primary">Falar com Consultor</button>
+      <button class="btn-outline-white">Baixar Catálogo Completo (PDF)</button>
+    </div>
+  </section>
+
+  <!-- Footer da página Projetos -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">Agência UNEB</div>
+        <p class="footer-brand-desc">Impulsionando a inovação e o desenvolvimento tecnológico no estado da Bahia através da pesquisa acadêmica e parcerias industriais.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Links Rápidos</div>
+        <ul class="footer-links">
+          <li><a href="#" onclick="navigate(event,'home')">Projetos Ativos</a></li>
+          <li><a href="#">Editais</a></li>
+          <li><a href="#">Banco de Patentes</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Institucional</div>
+        <ul class="footer-links">
+          <li><a href="#">Portal UNEB</a></li>
+          <li><a href="#">Termos de Uso</a></li>
+          <li><a href="#">Privacidade</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contato</div>
+        <p class="newsletter-desc">Salvador, Bahia, Brasil<br>contato.agencia@uneb.br<br>+55 (71) 3117-2200</p>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 Agência UNEB de Inovação. Universidade do Estado da Bahia.</div>
+  </footer>
+
+</div><!-- fim #page-projetos -->
+
+<!-- =============================================
+     JAVASCRIPT
+============================================= -->
+<script>
+/* -----------------------------------------------
+   DADOS DOS PROJETOS
+   Array com todos os ativos. Cada item tem:
+   tipo, status, título, descrição, ref, imagem.
+   Filtros e paginação operam sobre este array.
+----------------------------------------------- */
+const PROJECTS = [
+  {
+    tipo:'patente', status:'green', statusLabel:'Concedida',
+    titulo:'Eletrodo tipo Wafer reativo quimicamente de Alumínio e Gálio e Método de fabricação do mesmo',
+    desc:'Compreende um leito de alumínio (1A) produzido a partir de um bloco de alumínio com paredes superior (1C)...',
+    ref:'BR 07 2021 0145-2',
+    img:'https://thumbs.dreamstime.com/b/wafer-de-sil%C3%ADcio-para-fabrica%C3%A7%C3%A3o-semicondutores-circuitos-integrados-produtos-386806891.jpg'
+  },
+  {
+    tipo:'software', status:'green', statusLabel:'Concedido',
+    titulo:'Aplicativo Amamente',
+    desc:'O Amamente te atualiza sobre situações como Trauma Mamilar...',
+    ref:'SW 2024 0089-1',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMSXig6uOPmn0qgW0g7QC_-CHz1b7F75QSZA&s'
+  },
+  {
+    tipo:'desenho', status:'green', statusLabel:'Disponível para Licenciamento',
+    titulo:'Módulo Compacto para Sensores de Precisão em Drones',
+    desc:'Design ergonômico e aerodinâmico para encapsulamento de sensores multiespectrais...',
+    ref:'DI 30 2023 0012-0',
+    img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=70'
+  },
+  {
+    tipo:'patente', status:'green', statusLabel:'Disponível para Licenciamento',
+    titulo:'Geometria Avançada para Painéis Térmicos Solares',
+    desc:'Nova geometria para painéis térmicos solares que aumenta a captação energética em até 35%...',
+    ref:'BR 10 2023 0556-4',
+    img:'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&q=70'
+  },
+  {
+    tipo:'software', status:'yellow', statusLabel:'Em Desenvolvimento',
+    titulo:'SurgSim AR: Simulador Cirúrgico com Realidade Aumentada',
+    desc:'Software de simulação que utiliza óculos AR para treinamento tátil de residentes médicos e...',
+    ref:'SW 2023 0122-8',
+    img:'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=70'
+  },
+  {
+    tipo:'patente', status:'green', statusLabel:'Disponível para Licenciamento',
+    titulo:'Extrato Vegetal Antioxidante de Flora do Cerrado Baiano',
+    desc:'Composto natural com propriedades antioxidantes superiores e...',
+    ref:'BR 10 2024 0092-9',
+    img:'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&q=70'
+  },
+];
+
+const ITEMS_PER_PAGE = 6;
+let currentFilter = 'todos';
+let currentPage   = 1;
+let filteredData  = [...PROJECTS];
+
+/* -----------------------------------------------
+   renderProjects()
+   Filtra os dados pelo tipo selecionado,
+   fatia pelo número de página atual e
+   insere os cards no DOM.
+----------------------------------------------- */
+function renderProjects() {
+  filteredData = currentFilter === 'todos'
+    ? [...PROJECTS]
+    : PROJECTS.filter(p => p.tipo === currentFilter);
+
+  const total = filteredData.length;
+  const start = (currentPage - 1) * ITEMS_PER_PAGE;
+  const slice = filteredData.slice(start, start + ITEMS_PER_PAGE);
+
+  /* Atualiza o texto "Exibindo X de Y" */
+  document.getElementById('pageInfo').textContent =
+    `Exibindo ${Math.min(ITEMS_PER_PAGE, total)} de ${total} ativos`;
+
+  /* Renderiza os cards */
+  document.getElementById('projectsGrid').innerHTML = slice.map(p => `
+    <div class="project-card">
+      <img class="project-card-img" src="${p.img}" alt="${p.titulo}" loading="lazy">
+      <div class="project-card-body">
+        <div class="project-card-meta">
+          <span class="type-badge">${p.tipo.toUpperCase()}</span>
+          <span class="status-dot status-dot--${p.status}"></span>
+          <span class="status-text status-text--${p.status}">${p.statusLabel}</span>
+        </div>
+        <div class="project-card-title">${p.titulo}</div>
+        <div class="project-card-desc">${p.desc}</div>
+        <div class="project-card-footer">
+          <span class="project-ref">Ref: ${p.ref}</span>
+          <a href="#" class="link-details">
+            Detalhes
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  renderPagination(total);
+}
+
+/* -----------------------------------------------
+   renderPagination(total)
+   Gera os botões de paginação dinamicamente.
+   Mostra: ← | 1 | 2 | 3 | … | →
+----------------------------------------------- */
+function renderPagination(total) {
+  const pages = Math.ceil(total / ITEMS_PER_PAGE);
+  const el    = document.getElementById('pagination');
+  if (pages <= 1) { el.innerHTML = ''; return; }
+
+  let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>←</button>`;
+
+  for (let i = 1; i <= pages; i++) {
+    if (i === 1 || i === pages || Math.abs(i - currentPage) <= 1) {
+      html += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+    } else if (Math.abs(i - currentPage) === 2) {
+      html += `<button class="page-btn" disabled>…</button>`;
+    }
+  }
+
+  html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===pages?'disabled':''}>→</button>`;
+  el.innerHTML = html;
+}
+
+/* Vai para a página N */
+function goPage(n) {
+  const pages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+  if (n < 1 || n > pages) return;
+  currentPage = n;
+  renderProjects();
+  document.querySelector('.projects-header').scrollIntoView({ behavior:'smooth' });
+}
+
+/* -----------------------------------------------
+   Filtros — chips de categoria
+   Ao clicar em um chip, atualiza a classe
+   .active e re-renderiza os projetos.
+----------------------------------------------- */
+document.getElementById('filterChips').addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  currentFilter = chip.dataset.filter;
+  currentPage   = 1;
+  renderProjects();
+});
+
+/* -----------------------------------------------
+   Busca em tempo real
+   Filtra os projetos pelo texto digitado
+   comparando título e descrição.
+----------------------------------------------- */
+document.getElementById('searchInput').addEventListener('input', e => {
+  const query = e.target.value.toLowerCase();
+  if (query.length === 0) {
+    filteredData = currentFilter === 'todos' ? [...PROJECTS] : PROJECTS.filter(p => p.tipo === currentFilter);
+  } else {
+    filteredData = PROJECTS.filter(p =>
+      p.titulo.toLowerCase().includes(query) ||
+      p.desc.toLowerCase().includes(query)
+    );
+  }
+  currentPage = 1;
+  const total = filteredData.length;
+  document.getElementById('pageInfo').textContent = `Exibindo ${Math.min(ITEMS_PER_PAGE, total)} de ${total} ativos`;
+  document.getElementById('projectsGrid').innerHTML = filteredData.slice(0, ITEMS_PER_PAGE).map(p => `
+    <div class="project-card">
+      <img class="project-card-img" src="${p.img}" alt="${p.titulo}" loading="lazy">
+      <div class="project-card-body">
+        <div class="project-card-meta">
+          <span class="type-badge">${p.tipo.toUpperCase()}</span>
+          <span class="status-dot status-dot--${p.status}"></span>
+          <span class="status-text status-text--${p.status}">${p.statusLabel}</span>
+        </div>
+        <div class="project-card-title">${p.titulo}</div>
+        <div class="project-card-desc">${p.desc}</div>
+        <div class="project-card-footer">
+          <span class="project-ref">Ref: ${p.ref}</span>
+          <a href="#" class="link-details">Detalhes →</a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  renderPagination(total);
+});
+
+/* -----------------------------------------------
+   navigate(event, page)
+   Troca entre as páginas Home e Projetos
+   sem recarregar o browser (SPA simples).
+   - Esconde todas as .page
+   - Exibe a .page correta com .page--active
+   - Atualiza os links .active da navbar
+   - Mostra/esconde a barra de busca
+----------------------------------------------- */
+function navigate(event, page) {
+  if (event) event.preventDefault();
+
+  /* Esconde todas as páginas */
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('page--active'));
+
+  /* Exibe a página alvo */
+  document.getElementById('page-' + page).classList.add('page--active');
+
+  /* Atualiza links ativos na navbar */
+  document.querySelectorAll('.navbar-links a[data-target]').forEach(a => {
+    a.classList.toggle('active', a.dataset.target === page);
+  });
+
+  /* Barra de busca aparece apenas em Projetos */
+  document.getElementById('navSearch').classList.toggle('visible', page === 'projetos');
+
+  /* Fecha menu mobile se estiver aberto */
+  document.getElementById('navLinks').classList.remove('open');
+
+  /* Rola para o topo */
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  /* Inicializa projetos ao entrar na página */
+  if (page === 'projetos') renderProjects();
+}
+
+/* -----------------------------------------------
+   toggleMenu()
+   Abre/fecha o menu hamburguer no mobile.
+----------------------------------------------- */
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+/* -----------------------------------------------
+   Animação de scroll (Intersection Observer)
+   Observa elementos com .animate e adiciona
+   .visible quando entram no viewport, ativando
+   a transição CSS definida anteriormente.
+----------------------------------------------- */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target); // anima só uma vez
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+
+</script>
+</body>
+</html>
