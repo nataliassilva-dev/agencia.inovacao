@@ -50,31 +50,38 @@
 
   <ul class="navbar-links" id="navLinks">
     <li class="has-submenu">
-      <a href="#" class="active" data-target="home" onclick="navigate(event,'home')" aria-haspopup="true" aria-expanded="false">Início</a>
+      <a href="#home" data-target="home" onclick="navigate(event,'home')" aria-haspopup="true" aria-expanded="false">Início</a>
       <ul class="submenu" aria-label="Submenu Início">
         <li><a href="#home-missao" onclick="navigate(event,'home')">Sobre</a></li>
-        <li><a href="#home-historico" onclick="navigate(event,'home')">Equipe</a></li>
-        <li><a href="#home-historico" onclick="navigate(event,'home')">Biblioteca de Documentos</a></li>
+        <li><a href="#home-equipe" onclick="navigate(event,'home')">Equipe</a></li>
+        <li><a href="#home-documentos" onclick="navigate(event,'home')">Biblioteca de Documentos</a></li>
       </ul>
     </li>
     <li>
-      <a href="#" data-target="projetos" onclick="navigate(event,'projetos')">Vitrine Tecnológica</a>
+      <a href="#projetos" data-target="projetos" onclick="navigate(event,'projetos')">Vitrine Tecnológica</a>
     </li>
     <li class="has-submenu">
-      <a href="#" data-target="editais" onclick="navigate(event,'editais')" aria-haspopup="true" aria-expanded="false">Editais</a>
+      <a href="#editais" data-target="editais" onclick="navigate(event,'editais')" aria-haspopup="true" aria-expanded="false">Editais</a>
       <ul class="submenu" aria-label="Submenu Editais">
-        <li><a href="#edital-aberto" onclick="navigate(event,'editais')">PIBATI</a></li>
-        <li><a href="#edital-futur" onclick="navigate(event,'editais')">PROINOVAÇÃO</a></li>
+        <li><a href="#pibati" onclick="navigate(event,'editais')">PIBATI</a></li>
+        <li><a href="#proinovacao" onclick="navigate(event,'editais')">PROINOVAÇÃO</a></li>
       </ul>
     </li>
     <li class="has-submenu">
-      <a href="#" data-target="propriedade-intelectual" onclick="navigate(event,'propriedade-intelectual')" aria-haspopup="true" aria-expanded="false">Propriedade Intelectual</a>
+      <a href="#propriedade-intelectual" data-target="propriedade-intelectual" onclick="navigate(event,'propriedade-intelectual')" aria-haspopup="true" aria-expanded="false">Propriedade Intelectual</a>
       <ul class="submenu" aria-label="Submenu Propriedade Intelectual">
-        <li><a href="#patentes" onclick="navigate(event,'propriedade-intelectual')">Processo de Proteção</a></li>
-        <li><a href="#marcas" onclick="navigate(event,'propriedade-intelectual')">Empresas Juniores</a></li>
+        <li><a href="#processo-protecao" onclick="navigate(event,'propriedade-intelectual')">Processo de Proteção</a></li>
+        <li><a href="#empresas-juniores" onclick="navigate(event,'propriedade-intelectual')">Empresas Juniores</a></li>
       </ul>
     </li>
-    <li><a href="#" data-target="contato" onclick="navigate(event,'contato')">Contato</a></li>
+    <li class="has-submenu">
+      <a href="#eventos" data-target="eventos" onclick="navigate(event,'eventos')" aria-haspopup="true" aria-expanded="false">Eventos</a>
+      <ul class="submenu" aria-label="Submenu Eventos">
+        <li><a href="#workshop-inovacao" onclick="navigate(event,'eventos')">Workshop de Inovação</a></li>
+        <li><a href="#semana-ciencia" onclick="navigate(event,'eventos')">Semana de Ciência e Tecnologia</a></li>
+      </ul>
+    </li>
+    <li><a href="#contato" data-target="contato" onclick="navigate(event,'contato')">Contato</a></li>
   </ul>
 
   <button class="btn-cta" onclick="navigate(event,'home')">Inovar Agora</button>
@@ -239,7 +246,7 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand-name">Agência UNEB</div>
-        <p class="footer-brand-desc">Impulsionando a inovação e o desenvolvimento tecnológico no estado da Bahia através da pesquisa acadêmica e parcerias estratégicas.</p>
+        <p class="footer-brand-desc">Impulsionando a inovação e o desenvolvimento tecnológico no estado da Bahia através da pesquisa acadêmica e parcerias industriais.</p>
       </div>
       <div>
         <div class="footer-col-title">Navegação</div>
@@ -284,7 +291,7 @@
   <header class="projects-header">
     <div class="projects-label">Portfólio Tecnológico</div>
     <div class="projects-title-row">
-      <h1 class="projects-title">Ativos de <span>Inovação.</span></h1>
+      <h1 class="projects-title">Ativos de <span>Inovação</span></h1>
       <div class="assets-counter">
         <div class="assets-counter-icon">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
@@ -297,7 +304,7 @@
         </div>
       </div>
     </div>
-    <p class="projects-desc">Explore o catálogo de patentes, softwares e tecnologias desenvolvidas pela UNEB disponíveis para transferência e parcerias estratégicas.</p>
+    <p class="projects-desc">Explore o catálogo de patentes, softwares e tecnologias desenvolvidas pela UNEB, disponíveis para transferência e parcerias estratégicas.</p>
   </header>
 
   <!-- Barra de filtros + ordenação (sticky) -->
@@ -344,8 +351,8 @@
   <footer class="footer">
     <div class="footer-grid">
       <div>
-        <div class="footer-brand-name">Agência UNEB</div>
-        <p class="footer-brand-desc">Impulsionando a inovação e o desenvolvimento tecnológico no estado da Bahia através da pesquisa acadêmica e parcerias industriais.</p>
+        <div class="footer-brand-name">Agência UNEB de Inovação</div>
+        <p class="footer-brand-desc">Impulsionando a inovação e o desenvolvimento tecnológico no estado da Bahia através da pesquisa acadêmica e parcerias estratégicas.</p>
       </div>
       <div>
         <div class="footer-col-title">Links Rápidos</div>
@@ -365,7 +372,7 @@
       </div>
       <div>
         <div class="footer-col-title">Contato</div>
-        <p class="newsletter-desc">Salvador, Bahia, Brasil<br>contato.agencia@uneb.br<br>+55 (71) 3117-2200</p>
+        <p class="newsletter-desc">Salvador, Bahia, Brasil<br>agencia.inovacao@uneb.br<br>+55 (71) 3117-2200</p>
       </div>
     </div>
     <div class="footer-bottom">© 2026 Agência UNEB de Inovação. Universidade do Estado da Bahia.</div>
@@ -629,4 +636,3 @@ document.querySelectorAll('.animate').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
-
