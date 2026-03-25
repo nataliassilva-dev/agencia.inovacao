@@ -157,6 +157,12 @@
       height: 150px;
       width: 150px;
       object-fit: contain;
+      transition: height 0.3s ease, width 0.3s ease;
+    }
+
+    .navbar-brand.small-logos img {
+      height: 100px;
+      width: 100px;
     }
 
     /* Links do nav com indicador ativo */
@@ -1262,6 +1268,37 @@
     /* =============================================
        RESPONSIVO
     ============================================= */
+    @media (max-width: 1024px) {
+      /* Tablet */
+      .navbar {
+        height: 120px;
+        padding: 0 3%;
+      }
+      .navbar-brand img {
+        height: 100px;
+        width: 100px;
+      }
+      .navbar-links a {
+        font-size: 15px;
+        padding: 6px 12px;
+      }
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .hero p {
+        font-size: 1.1rem;
+      }
+      .services-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .bento-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .bento-large {
+        grid-column: 1 / -1;
+      }
+    }
+
     @media (max-width: 900px) {
       .bento-grid {
         grid-template-columns: 1fr;
@@ -1272,13 +1309,35 @@
       .footer-grid { grid-template-columns: 1fr 1fr; }
     }
 
+    @media (max-width: 768px) {
+      /* Mobile grande */
+      .navbar {
+        height: 100px;
+        padding: 0 2%;
+      }
+      .navbar-brand img {
+        height: 80px;
+        width: 80px;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+      .bento-right { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 640px) {
       .navbar-links { display: none; }
       .navbar-links.open {
         display: flex;
         flex-direction: column;
         position: absolute;
-        top: 64px;
+        top: calc(var(--access-height) + 80px);
         left: 0;
         right: 0;
         background: var(--white);
@@ -1305,6 +1364,30 @@
       .footer-grid { grid-template-columns: 1fr; }
       .projects-title-row { flex-direction: column; }
       .cta-section { margin: 0 0 80px; border-radius: 0; }
+    }
+
+    @media (max-width: 480px) {
+      /* Mobile pequeno */
+      .navbar {
+        height: 80px;
+      }
+      .navbar-brand img {
+        height: 60px;
+        width: 60px;
+      }
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      .hero p {
+        font-size: 0.95rem;
+      }
+      .hero-buttons {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .section {
+        padding: 60px 3%;
+      }
     }
 
     /* ======================================
