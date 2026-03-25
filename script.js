@@ -229,6 +229,31 @@ function navigate(event, page) {
 function toggleMenu() {
   document.getElementById('navLinks').classList.toggle('open');
 }
+
+/* -----------------------------------------------
+   Submenu - mobile e clique
+----------------------------------------------- */
+document.querySelectorAll('.navbar-links .has-submenu > a').forEach(link => {
+  link.addEventListener('click', e => {
+    if (window.innerWidth <= 900) {
+      e.preventDefault();
+      const submenu = link.nextElementSibling;
+      if (!submenu) return;
+      const isOpen = submenu.style.display === 'block';
+      document.querySelectorAll('.navbar-links .submenu').forEach(m => m.style.display = 'none');
+      document.querySelectorAll('.navbar-links .has-submenu > a').forEach(a => a.setAttribute('aria-expanded', 'false'));
+      submenu.style.display = isOpen ? 'none' : 'block';
+      link.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+    }
+  });
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.navbar-links')) {
+    document.querySelectorAll('.navbar-links .submenu').forEach(menu => menu.style.display = 'none');
+    document.querySelectorAll('.navbar-links .has-submenu > a').forEach(a => a.setAttribute('aria-expanded', 'false'));
+  }
+});
  
 /* -----------------------------------------------
    Animação de scroll (Intersection Observer)
@@ -246,3 +271,54 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.15 });
  
 document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+
+/* -----------------------------------------------
+   Navegação por hash (URL)
+   Ao carregar a página, verifica o hash e navega.
+----------------------------------------------- */
+window.addEventListener('load', () => {
+  const hash = window.location.hash.substring(1);
+  if (hash) {
+    const pageMap = {
+      'home': 'home',
+      'projetos': 'projetos',
+      'editais': 'editais',
+      'propriedade-intelectual': 'propriedade-intelectual',
+      'eventos': 'eventos',
+      'contato': 'contato'
+    };
+    const page = pageMap[hash] || 'home';
+    navigate(null, page);
+  }
+});
+
+/* Atualiza hash ao navegar */
+function navigate(event, page) {
+  if (event) event.preventDefault();
+
+  /* Esconde todas as páginas */
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('page--active'));
+
+  /* Exibe a página alvo */
+  document.getElementById('page-' + page).classList.add('page--active');
+
+  /* Atualiza links ativos na navbar */
+  document.querySelectorAll('.navbar-links a[data-target]').forEach(a => {
+    a.classList.toggle('active', a.dataset.target === page);
+  });
+
+  /* Barra de busca aparece apenas em Projetos */
+  document.getElementById('navSearch').classList.toggle('visible', page === 'projetos');
+
+  /* Fecha menu mobile se estiver aberto */
+  document.getElementById('navLinks').classList.remove('open');
+
+  /* Atualiza hash da URL */
+  window.location.hash = page;
+
+  /* Rola para o topo */
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  /* Inicializa projetos ao entrar na página */
+  if (page === 'projetos') renderProjects();
+}
