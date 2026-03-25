@@ -131,7 +131,7 @@
       top: var(--access-height);
       width: 100%;
       z-index: 1000;
-      margin-top:0;
+      margin-top: 20px;
       background: var(--white);
       border-bottom: 1px solid var(--gray-100);
       display: flex;
@@ -143,11 +143,20 @@
     }
 
     .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       font-family: var(--font-head);
       font-size: 17px;
       font-weight: 700;
       color: var(--navy);
       letter-spacing: -0.3px;
+    }
+
+    .navbar-brand img {
+      height: 150px;
+      width: 150px;
+      object-fit: contain;
     }
 
     /* Links do nav com indicador ativo */
@@ -236,7 +245,7 @@
     }
 
     .navbar-links a {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 500;
       color: var(--gray-600);
       padding: 6px 14px;
