@@ -46,10 +46,31 @@
   </div>
 
   <ul class="navbar-links" id="navLinks">
-    <li><a href="#" class="active" data-target="home" onclick="navigate(event,'home')">Início</a></li>
-    <li><a href="#" data-target="projetos" onclick="navigate(event,'projetos')">Projetos</a></li>
-    <li><a href="#" data-target="editais" onclick="navigate(event,'editais')">Editais</a></li>
-    <li><a href="#" data-target="propriedade-intelectual" onclick="navigate(event,'propriedade-intelectual')">Propriedade Intelectual</a></li>
+    <li class="has-submenu">
+      <a href="#" class="active" data-target="home" onclick="navigate(event,'home')" aria-haspopup="true" aria-expanded="false">Início</a>
+      <ul class="submenu" aria-label="Submenu Início">
+        <li><a href="#home-missao" onclick="navigate(event,'home')">Sobre</a></li>
+        <li><a href="#home-historico" onclick="navigate(event,'home')">Equipe</a></li>
+        <li><a href="#home-historico" onclick="navigate(event,'home')">Biblioteca de Documentos</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" data-target="projetos" onclick="navigate(event,'projetos')">Vitrine Tecnológica</a>
+    </li>
+    <li class="has-submenu">
+      <a href="#" data-target="editais" onclick="navigate(event,'editais')" aria-haspopup="true" aria-expanded="false">Editais</a>
+      <ul class="submenu" aria-label="Submenu Editais">
+        <li><a href="#edital-aberto" onclick="navigate(event,'editais')">PIBATI</a></li>
+        <li><a href="#edital-futur" onclick="navigate(event,'editais')">PROINOVAÇÃO</a></li>
+      </ul>
+    </li>
+    <li class="has-submenu">
+      <a href="#" data-target="propriedade-intelectual" onclick="navigate(event,'propriedade-intelectual')" aria-haspopup="true" aria-expanded="false">Propriedade Intelectual</a>
+      <ul class="submenu" aria-label="Submenu Propriedade Intelectual">
+        <li><a href="#patentes" onclick="navigate(event,'propriedade-intelectual')">Processo de Proteção</a></li>
+        <li><a href="#marcas" onclick="navigate(event,'propriedade-intelectual')">Empresas Juniores</a></li>
+      </ul>
+    </li>
     <li><a href="#" data-target="contato" onclick="navigate(event,'contato')">Contato</a></li>
   </ul>
 
@@ -605,3 +626,4 @@ document.querySelectorAll('.animate').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
+
