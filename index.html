@@ -5,42 +5,1024 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agência UNEB de Inovação</title>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --blue-dark:  #0a2342;
+      --blue:       #1a4a8a;
+      --blue-mid:   #2563eb;
+      --blue-light: #3b82f6;
+      --green:      #059669;
+      --green-light:#10b981;
+      --teal:       #0891b2;
+      --gray-50:    #f8fafc;
+      --gray-100:   #f1f5f9;
+      --gray-200:   #e2e8f0;
+      --gray-400:   #94a3b8;
+      --gray-600:   #475569;
+      --gray-800:   #1e293b;
+      --white:      #ffffff;
+      --font-size:  16px;
+    }
+
+    html { font-size: var(--font-size); scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Atkinson Hyperlegible', sans-serif;
+      color: var(--gray-800);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ===== HIGH CONTRAST MODE ===== */
+    body.high-contrast {
+      --blue-dark: #000;
+      --blue: #000080;
+      --blue-mid: #0000cc;
+      --gray-50: #fff;
+      --gray-100: #fff;
+      --gray-800: #000;
+      background: #fff !important;
+      color: #000 !important;
+    }
+    body.high-contrast .navbar { background: #000 !important; }
+    body.high-contrast .navbar-links a,
+    body.high-contrast .btn-cta { color: #fff !important; }
+
+    /* ===== ACCESSIBILITY BAR ===== */
+    .accessibility-bar {
+      background: var(--blue-dark);
+      color: var(--white);
+      font-size: 0.75rem;
+      padding: 6px 0;
+    }
+    .accessibility-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .access-label { opacity: 0.7; white-space: nowrap; }
+    .access-links { display: flex; gap: 12px; flex-wrap: wrap; }
+    .access-links a {
+      color: var(--white);
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity .2s;
+    }
+    .access-links a:hover { opacity: 1; text-decoration: underline; }
+    .access-controls { display: flex; gap: 8px; margin-left: auto; flex-wrap: wrap; }
+    .access-controls button {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: var(--white);
+      padding: 2px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.72rem;
+      transition: background .2s;
+    }
+    .access-controls button:hover { background: rgba(255,255,255,0.25); }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      height: 68px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    .logo-agencia { height: 40px; object-fit: contain; }
+    .logo-uneb    { height: 36px; object-fit: contain; }
+
+    /* Nav links */
+    .navbar-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin: 0 auto;
+      padding: 0;
+    }
+    .navbar-links li { position: relative; }
+    .navbar-links a {
+      display: block;
+      padding: 8px 14px;
+      color: var(--gray-800);
+      text-decoration: none;
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      border-radius: 6px;
+      transition: background .2s, color .2s;
+      white-space: nowrap;
+    }
+    .navbar-links a:hover,
+    .navbar-links a.active { background: var(--gray-100); color: var(--blue-mid); }
+
+    /* Submenu */
+    .has-submenu > a::after {
+      content: ' ▾';
+      font-size: 0.7rem;
+      opacity: 0.6;
+    }
+    .submenu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      min-width: 200px;
+      padding: 6px;
+      list-style: none;
+      z-index: 200;
+    }
+    .has-submenu:hover .submenu,
+    .has-submenu:focus-within .submenu { display: block; }
+    .submenu li a {
+      display: block;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.84rem;
+      color: var(--gray-600);
+    }
+    .submenu li a:hover { background: var(--gray-50); color: var(--blue-mid); }
+
+    /* Navbar search */
+    .navbar-search {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 6px 12px;
+      min-width: 220px;
+    }
+    .navbar-search.visible { display: flex; }
+    .navbar-search input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.84rem;
+      width: 100%;
+      color: var(--gray-800);
+    }
+    .navbar-search svg { opacity: 0.5; flex-shrink: 0; }
+
+    .btn-cta {
+      background: var(--blue-mid);
+      color: var(--white);
+      border: none;
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .2s;
+      flex-shrink: 0;
+    }
+    .btn-cta:hover { background: var(--blue); }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 6px;
+      color: var(--gray-800);
+      flex-shrink: 0;
+    }
+
+    /* ===== SPA PAGES ===== */
+    .page { display: none; }
+    .page--active { display: block; }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, var(--teal) 100%);
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-content {
+      max-width: 700px;
+      margin: 0 auto;
+      color: var(--white);
+      position: relative;
+      z-index: 1;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: var(--white);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-family: 'Lexend', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Lexend', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--green-light); }
+    .hero p {
+      font-size: 1.05rem;
+      opacity: 0.88;
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 520px;
+    }
+    .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: var(--white);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 9px;
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--green-light); transform: translateY(-1px); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.5);
+      padding: 11px 24px;
+      border-radius: 9px;
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      padding: 72px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section--full { max-width: 100%; padding: 72px 24px; }
+    .section--light { background: var(--white); }
+    .section--gray  { background: var(--gray-50); max-width: 100%; padding: 72px 24px; }
+
+    .section-label {
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue-mid);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Lexend', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      color: var(--blue-dark);
+      margin-bottom: 40px;
+      line-height: 1.2;
+    }
+
+    /* ===== SERVICES GRID ===== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 14px;
+      padding: 28px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    }
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #e0f2fe, #d1fae5);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: var(--blue);
+    }
+    .service-card h3 {
+      font-family: 'Lexend', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: 10px;
+    }
+    .service-card p {
+      font-size: 0.88rem;
+      color: var(--gray-600);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .link-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--blue-mid);
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 600;
+      font-family: 'Lexend', sans-serif;
+    }
+    .link-more:hover { text-decoration: underline; }
+
+    /* ===== BENTO GRID ===== */
+    .vitrine-header {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 0 32px;
+      flex-wrap: wrap;
+    }
+    .vitrine-header p { color: var(--gray-600); font-size: 0.92rem; margin-top: 6px; }
+    .btn-ghost {
+      background: transparent;
+      border: 2px solid var(--blue-mid);
+      color: var(--blue-mid);
+      padding: 10px 22px;
+      border-radius: 9px;
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .2s, color .2s;
+      flex-shrink: 0;
+    }
+    .btn-ghost:hover { background: var(--blue-mid); color: var(--white); }
+
+    .bento-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 16px;
+    }
+    .bento-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .bento-card {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      min-height: 180px;
+      transition: transform .2s;
+    }
+    .bento-card:hover { transform: scale(1.01); }
+    .bento-large  { grid-row: span 2; min-height: 380px; }
+    .bento-medium { grid-column: span 2; }
+    .bento-card-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform .4s;
+    }
+    .bento-card:hover .bento-card-bg { transform: scale(1.04); }
+    .bento-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,35,66,0.85) 0%, rgba(10,35,66,0.2) 60%, transparent 100%);
+    }
+    .bento-card-content {
+      position: relative;
+      z-index: 1;
+      padding: 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .card-badge {
+      display: inline-block;
+      background: rgba(16,185,129,0.85);
+      color: var(--white);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-family: 'Lexend', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+      align-self: flex-start;
+    }
+    .bento-card-title {
+      font-family: 'Lexend', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .bento-card-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.8);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+    .bento-card--solid {
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 20px;
+      color: var(--white);
+      min-height: 160px;
+    }
+    .bento-card--solid h3 {
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-top: 12px;
+      line-height: 1.3;
+    }
+    .bento-card--solid svg { opacity: 0.9; }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+      color: var(--white);
+      text-align: center;
+      padding: 72px 24px;
+    }
+    .cta-section h2 {
+      font-family: 'Lexend', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .cta-section p {
+      opacity: 0.85;
+      font-size: 1rem;
+      margin-bottom: 32px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-white {
+      background: var(--white);
+      color: var(--blue-dark);
+      border: none;
+      padding: 12px 28px;
+      border-radius: 9px;
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .btn-white:hover { opacity: 0.9; }
+    .btn-outline-white {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.6);
+      padding: 11px 28px;
+      border-radius: 9px;
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-outline-white:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--blue-dark);
+      color: rgba(255,255,255,0.75);
+      padding: 56px 24px 24px;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 40px;
+      padding-bottom: 40px;
+    }
+    .footer-brand-name {
+      font-family: 'Lexend', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .footer-brand-desc { font-size: 0.84rem; line-height: 1.65; }
+    .footer-col-title {
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 8px; }
+    .footer-links a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .newsletter-desc { font-size: 0.84rem; margin-bottom: 14px; line-height: 1.5; }
+    .newsletter-form {
+      display: flex;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .newsletter-form input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 10px 14px;
+      color: var(--white);
+      font-size: 0.84rem;
+    }
+    .newsletter-form input::placeholder { color: rgba(255,255,255,0.4); }
+    .newsletter-form button {
+      background: var(--blue-mid);
+      border: none;
+      padding: 10px 14px;
+      cursor: pointer;
+      color: var(--white);
+      transition: background .2s;
+    }
+    .newsletter-form button:hover { background: var(--blue-light); }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.8rem;
+      text-align: center;
+      opacity: 0.6;
+    }
+
+    /* ===== PROJECTS PAGE ===== */
+    .projects-header {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);
+      color: var(--white);
+      padding: 56px 24px 48px;
+    }
+    .projects-header > * { max-width: 900px; margin-left: auto; margin-right: auto; }
+    .projects-label {
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 10px;
+    }
+    .projects-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .projects-title {
+      font-family: 'Lexend', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.1;
+    }
+    .projects-title span { color: var(--green-light); }
+    .assets-counter {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      padding: 12px 20px;
+    }
+    .assets-counter-icon {
+      width: 40px; height: 40px;
+      background: var(--green);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white);
+    }
+    .assets-counter-num {
+      font-family: 'Lexend', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+    .assets-counter-label { font-size: 0.75rem; opacity: 0.75; margin-top: 2px; }
+    .projects-desc { opacity: 0.85; font-size: 0.95rem; line-height: 1.65; max-width: 600px; }
+
+    /* Toolbar */
+    .projects-toolbar {
+      position: sticky;
+      top: 68px;
+      z-index: 50;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .filter-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .chip {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      color: var(--gray-600);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .chip:hover, .chip.active {
+      background: var(--blue-mid);
+      border-color: var(--blue-mid);
+      color: var(--white);
+    }
+    .sort-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.84rem;
+      color: var(--gray-600);
+    }
+    .sort-select {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.84rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Project cards */
+    .projects-grid-wrapper { padding: 40px 24px; max-width: 1200px; margin: 0 auto; }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .project-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.09);
+    }
+    .project-card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .project-card-body { padding: 20px; }
+    .project-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .type-badge {
+      background: #e0f2fe;
+      color: var(--teal);
+      padding: 2px 9px;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      font-family: 'Lexend', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status-dot--green  { background: var(--green); }
+    .status-dot--yellow { background: #f59e0b; }
+    .status-dot--red    { background: #ef4444; }
+    .status-text { font-size: 0.78rem; color: var(--gray-600); }
+    .status-text--green  { color: var(--green); }
+    .status-text--yellow { color: #d97706; }
+    .project-card-title {
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: 8px;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .project-card-desc {
+      font-size: 0.82rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .project-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid var(--gray-100);
+    }
+    .project-ref {
+      font-size: 0.74rem;
+      color: var(--gray-400);
+      font-family: 'Lexend', sans-serif;
+    }
+    .link-details {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--blue-mid);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: 'Lexend', sans-serif;
+    }
+    .link-details:hover { text-decoration: underline; }
+
+    /* Pagination */
+    .page-info { font-size: 0.82rem; color: var(--gray-400); margin-bottom: 16px; text-align: center; }
+    .pagination { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+    .page-btn {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      color: var(--gray-600);
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.84rem;
+      transition: all .15s;
+    }
+    .page-btn:hover:not(:disabled) { background: var(--gray-100); }
+    .page-btn.active { background: var(--blue-mid); border-color: var(--blue-mid); color: var(--white); }
+    .page-btn:disabled { opacity: 0.4; cursor: default; }
+
+    /* Not found section */
+    .not-found-section {
+      background: var(--gray-50);
+      border-top: 1px solid var(--gray-200);
+      text-align: center;
+      padding: 56px 24px;
+    }
+    .not-found-section h2 {
+      font-family: 'Lexend', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: 12px;
+    }
+    .not-found-section p {
+      color: var(--gray-600);
+      font-size: 0.92rem;
+      max-width: 500px;
+      margin: 0 auto 28px;
+      line-height: 1.65;
+    }
+    .not-found-section .cta-buttons .btn-primary { background: var(--blue-mid); }
+    .not-found-section .btn-outline-white {
+      color: var(--blue-mid);
+      border-color: var(--blue-mid);
+    }
+    .not-found-section .btn-outline-white:hover { background: var(--blue-mid); color: var(--white); }
+
+    /* ===== PLACEHOLDER PAGES ===== */
+    .placeholder-page {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px;
+    }
+    .placeholder-page .placeholder-icon {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, #e0f2fe, #d1fae5);
+      border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      color: var(--blue);
+    }
+    .placeholder-page h1 {
+      font-family: 'Lexend', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      margin-bottom: 12px;
+    }
+    .placeholder-page p {
+      color: var(--gray-600);
+      font-size: 0.95rem;
+      max-width: 400px;
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+    .tag-em-breve {
+      display: inline-block;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-family: 'Lexend', sans-serif;
+      font-weight: 600;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    .animate {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .animate.visible { opacity: 1; transform: none; }
+    .animate-d1 { transition-delay: .1s; }
+    .animate-d2 { transition-delay: .2s; }
+    .animate-d3 { transition-delay: .3s; }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      .navbar-links {
+        display: none;
+        position: fixed;
+        top: 116px; /* accessibility bar + navbar */
+        left: 0; right: 0;
+        background: var(--white);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+        border-bottom: 1px solid var(--gray-200);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        gap: 0;
+        z-index: 999;
+      }
+      .navbar-links.open { display: flex; }
+      .navbar-links li { width: 100%; }
+      .navbar-links a { width: 100%; padding: 12px 16px; }
+      .submenu {
+        position: static;
+        box-shadow: none;
+        border: none;
+        border-left: 2px solid var(--gray-200);
+        margin-left: 16px;
+        border-radius: 0;
+        padding: 0;
+        display: block; /* always show on mobile */
+      }
+      .submenu li a { padding: 10px 16px; }
+      .nav-toggle { display: flex; }
+      .btn-cta { display: none; }
+      .navbar-search { display: none !important; }
+
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-right { grid-template-columns: 1fr; }
+      .bento-large { min-height: 260px; }
+      .bento-medium { grid-column: span 1; }
+
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .projects-title-row { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 960px) {
+      .navbar-links { gap: 0; }
+      .navbar-links a { padding: 8px 10px; font-size: 0.82rem; }
+    }
+  </style>
 </head>
 <body>
 
 <div id="app">
 
-<!-- BARRA DE ACESSIBILIDADE --> 
- <div class="accessibility-bar"> 
-  <div class="accessibility-container"> 
-    <div class="access-label">Acessibilidade:  </div> 
-    <div class="access-links"> 
-      <a href="#acesso-rapido"> Ir para o conteúdo</a> 
-      <a href="#rodape">Ir para o rodapé</a> 
-      <a href="https://www.gov.br/" target="_blank">Sites do Governo</a> </div> 
-      <div class="access-controls"> 
-        <button id="decrease-font">A-</button> 
-        <button id="increase-font">A+</button> 
-        <button id="toggle-contrast">Alto Contraste</button> 
-        <button id="vlibras-btn" onclick="window.open('https://www.vlibras.gov.br/', '_blank')">VLibras</button> 
-      </div> 
-    </div> 
+<!-- BARRA DE ACESSIBILIDADE -->
+<div class="accessibility-bar">
+  <div class="accessibility-container">
+    <div class="access-label">Acessibilidade:</div>
+    <div class="access-links">
+      <a href="#acesso-rapido">Ir para o conteúdo</a>
+      <a href="#rodape">Ir para o rodapé</a>
+      <a href="https://www.gov.br/" target="_blank">Sites do Governo</a>
+    </div>
+    <div class="access-controls">
+      <button id="decrease-font" onclick="adjustFont(-1)">A-</button>
+      <button id="increase-font" onclick="adjustFont(1)">A+</button>
+      <button id="toggle-contrast" onclick="toggleContrast()">Alto Contraste</button>
+      <button id="vlibras-btn" onclick="window.open('https://www.vlibras.gov.br/','_blank')">VLibras</button>
+    </div>
   </div>
+</div>
 
-<!-- =============================================
-     NAVBAR
-     Presente em ambas as páginas.
-     data-page muda via JS ao clicar nos links.
-============================================= -->
+<!-- NAVBAR -->
 <nav class="navbar" id="navbar">
-  <div class="navbar-brand">
-    <img src="Logo-AUI-Azul-1-Logo-Azul-Horizontal-Fundo-Branco-1 (1).png" alt="Logo Agência UNEB de Inovação" class="logo-agencia">
-    <img src="logo_uneb.svg" alt="Logo Universidade do Estado da Bahia" class="logo-uneb">
+  <div class="navbar-brand" style="cursor:pointer" onclick="navigate(event,'home')">
+    <img src="Logo-AUI-Azul-1-Logo-Azul-Horizontal-Fundo-Branco-1 (1).png" alt="Logo Agência UNEB de Inovação" class="logo-agencia"
+         onerror="this.style.display='none'">
+    <img src="logo_uneb.svg" alt="Logo Universidade do Estado da Bahia" class="logo-uneb"
+         onerror="this.style.display='none'">
   </div>
 
-  <!-- Campo de busca visível só em Projetos -->
+  <!-- Busca — visível só em Projetos -->
   <div class="navbar-search" id="navSearch">
     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
@@ -49,42 +1031,57 @@
   </div>
 
   <ul class="navbar-links" id="navLinks">
+
+    <!-- Início -->
     <li class="has-submenu">
-      <a href="#home" data-target="home" onclick="navigate(event,'home')" aria-haspopup="true" aria-expanded="false">Início</a>
+      <a href="#" data-target="home" onclick="navigate(event,'home')">Início</a>
       <ul class="submenu" aria-label="Submenu Início">
-        <li><a href="#home-missao" onclick="navigate(event,'home')">Sobre</a></li>
-        <li><a href="#home-equipe" onclick="navigate(event,'home')">Equipe</a></li>
-        <li><a href="#home-documentos" onclick="navigate(event,'home')">Biblioteca de Documentos</a></li>
+        <li><a href="#" onclick="navigate(event,'home')">Sobre</a></li>
+        <li><a href="#" onclick="navigate(event,'home')">Equipe</a></li>
+        <li><a href="#" onclick="navigate(event,'home')">Documentos</a></li>
       </ul>
     </li>
+
+    <!-- Vitrine Tecnológica -->
     <li>
-      <a href="#projetos" data-target="projetos" onclick="navigate(event,'projetos')">Vitrine Tecnológica</a>
+      <a href="#" data-target="projetos" onclick="navigate(event,'projetos')">Vitrine Tecnológica</a>
     </li>
+
+    <!-- Editais -->
     <li class="has-submenu">
-      <a href="#editais" data-target="editais" onclick="navigate(event,'editais')" aria-haspopup="true" aria-expanded="false">Editais</a>
+      <a href="#" data-target="editais" onclick="navigate(event,'editais')">Editais</a>
       <ul class="submenu" aria-label="Submenu Editais">
-        <li><a href="#pibati" onclick="navigate(event,'editais')">PIBATI</a></li>
-        <li><a href="#proinovacao" onclick="navigate(event,'editais')">PROINOVAÇÃO</a></li>
+        <li><a href="#" onclick="navigate(event,'editais')">PIBATI</a></li>
+        <li><a href="#" onclick="navigate(event,'editais')">PROINOVAÇÃO</a></li>
       </ul>
     </li>
+
+    <!-- Propriedade Intelectual -->
     <li class="has-submenu">
-      <a href="#propriedade-intelectual" data-target="propriedade-intelectual" onclick="navigate(event,'propriedade-intelectual')" aria-haspopup="true" aria-expanded="false">Propriedade Intelectual</a>
+      <a href="#" data-target="propriedade-intelectual" onclick="navigate(event,'propriedade-intelectual')">Prop. Intelectual</a>
       <ul class="submenu" aria-label="Submenu Propriedade Intelectual">
-        <li><a href="#processo-protecao" onclick="navigate(event,'propriedade-intelectual')">Processo de Proteção</a></li>
-        <li><a href="#empresas-juniores" onclick="navigate(event,'propriedade-intelectual')">Empresas Juniores</a></li>
+        <li><a href="#" onclick="navigate(event,'propriedade-intelectual')">Processo de Proteção</a></li>
+        <li><a href="#" onclick="navigate(event,'propriedade-intelectual')">Empresas Juniores</a></li>
       </ul>
     </li>
+
+    <!-- Eventos -->
     <li class="has-submenu">
-      <a href="#eventos" data-target="eventos" onclick="navigate(event,'eventos')" aria-haspopup="true" aria-expanded="false">Eventos</a>
+      <a href="#" data-target="eventos" onclick="navigate(event,'eventos')">Eventos</a>
       <ul class="submenu" aria-label="Submenu Eventos">
-        <li><a href="#workshop-inovacao" onclick="navigate(event,'eventos')">Workshop de Inovação</a></li>
-        <li><a href="#semana-ciencia" onclick="navigate(event,'eventos')">Semana de Ciência e Tecnologia</a></li>
+        <li><a href="#" onclick="navigate(event,'eventos')">Workshop de Inovação</a></li>
+        <li><a href="#" onclick="navigate(event,'eventos')">Semana de Ciência e Tecnologia</a></li>
       </ul>
     </li>
-    <li><a href="#contato" data-target="contato" onclick="navigate(event,'contato')">Contato</a></li>
+
+    <!-- Contato -->
+    <li>
+      <a href="#" data-target="contato" onclick="navigate(event,'contato')">Contato</a>
+    </li>
+
   </ul>
 
-  <button class="btn-cta" onclick="navigate(event,'home')">Inovar Agora</button>
+  <button class="btn-cta" onclick="navigate(event,'projetos')">Inovar Agora</button>
 
   <button class="nav-toggle" id="navToggle" aria-label="Menu" onclick="toggleMenu()">
     <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -98,14 +1095,13 @@
 ============================================= -->
 <div class="page page--active" id="page-home">
 
-  <!-- HERO -->
-  <section class="hero">
+  <section class="hero" id="acesso-rapido">
     <div class="hero-content">
       <span class="badge">Inovação Acadêmica</span>
       <h1>Conectando<br>Conhecimento<br>e <span>Inovação</span></h1>
       <p>A Agência UNEB de Inovação transforma o potencial científico da academia em soluções tecnológicas de alto impacto para a sociedade.</p>
       <div class="hero-buttons">
-        <button class="btn-primary" onclick="navigate(event,'projetos')">
+        <button class="btn-primary" onclick="navigate(event,'editais')">
           Conheça nossos Editais
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
@@ -118,11 +1114,9 @@
   <section class="section section--light">
     <div class="section-label">Serviços Estratégicos</div>
     <div class="section-title">Apoio em toda a jornada inovadora</div>
-
     <div class="services-grid">
       <div class="service-card animate animate-d1">
         <div class="service-icon">
-          <!-- Ícone escudo: Propriedade Intelectual -->
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             <path d="M9 12l2 2 4-4"/>
@@ -130,61 +1124,52 @@
         </div>
         <h3>Propriedade Intelectual</h3>
         <p>Proteção legal para suas invenções, marcas, softwares e desenhos industriais desenvolvidos no âmbito acadêmico.</p>
-        <a href="#" class="link-more">
+        <a href="#" class="link-more" onclick="navigate(event,'propriedade-intelectual')">
           Saiba mais
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
-
       <div class="service-card animate animate-d2">
         <div class="service-icon">
-          <!-- Ícone handshake: Transferência de Tecnologia -->
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-            <path d="M20.42 4.58a5.4 5.4 0 00-7.65 0l-.77.78-.77-.78a5.4 5.4 0 00-7.65 7.65l.77.78 7.65 7.65 7.65-7.65.78-.78a5.4 5.4 0 000-7.65z"/>
+            <path d="M17 1l4 4-4 4M3 11V9a4 4 0 014-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 01-4 4H3"/>
           </svg>
         </div>
         <h3>Transferência de Tecnologia</h3>
         <p>Intermediação entre a universidade e empresas para aplicação prática de conhecimentos e licenciamento tecnológico.</p>
-        <a href="#" class="link-more">
+        <a href="#" class="link-more" onclick="navigate(event,'projetos')">
           Saiba mais
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
-
       <div class="service-card animate animate-d3">
         <div class="service-icon">
-          <!-- Ícone foguete: Incubação de Startups -->
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
             <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09z"/>
             <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/>
-            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
           </svg>
         </div>
         <h3>Incubação de Startups</h3>
         <p>Apoio operacional e mentoria para o nascimento e crescimento de empresas de base tecnológica originadas na UNEB.</p>
-        <a href="#" class="link-more">
+        <a href="#" class="link-more" onclick="navigate(event,'editais')">
           Saiba mais
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- VITRINE TECNOLÓGICA -->
-  <section class="section section--gray">
-    <div class="vitrine-header animate">
+  <!-- VITRINE PREVIEW -->
+  <section class="section--gray" style="padding:72px 24px;">
+    <div class="vitrine-header">
       <div>
         <div class="section-label">Vitrine de Inovação</div>
         <div class="section-title" style="margin-bottom:8px;">Destaques Tecnológicos</div>
-        <p>Conheça as patentes e tecnologias desenvolvidas no âmbito da UNEB.</p>
+        <p style="color:var(--gray-600);font-size:.92rem;margin-top:6px;">Conheça as patentes e tecnologias desenvolvidas no âmbito da UNEB.</p>
       </div>
       <button class="btn-ghost" onclick="navigate(event,'projetos')">Ver portfólio completo</button>
     </div>
-
-    <!-- Bento grid assimétrico -->
     <div class="bento-grid animate">
-
-      <!-- Card grande (esquerda, 2 linhas) -->
       <div class="bento-card bento-large" onclick="navigate(event,'projetos')">
         <div class="bento-card-bg" style="background-image:url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=900&q=80')"></div>
         <div class="bento-card-overlay"></div>
@@ -194,11 +1179,7 @@
           <div class="bento-card-desc">Tecnologia desenvolvida para substituição de plásticos convencionais na indústria farmacêutica.</div>
         </div>
       </div>
-
-      <!-- 3 cards menores (direita) -->
       <div class="bento-right">
-
-        <!-- Card médio com foto (superior, ocupa 2 colunas) -->
         <div class="bento-card bento-medium" style="min-height:200px;" onclick="navigate(event,'projetos')">
           <div class="bento-card-bg" style="background-image:url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80')"></div>
           <div class="bento-card-overlay"></div>
@@ -207,8 +1188,6 @@
             <div class="bento-card-title">Processador de Baixo Custo para IoT</div>
           </div>
         </div>
-
-        <!-- Card sólido ciano (ícone) -->
         <div class="bento-card bento-card--solid" onclick="navigate(event,'projetos')">
           <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
             <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
@@ -216,8 +1195,6 @@
           </svg>
           <h3>Software de Telemedicina</h3>
         </div>
-
-        <!-- Card com foto: Células Fotovoltaicas -->
         <div class="bento-card" style="min-height:180px;" onclick="navigate(event,'projetos')">
           <div class="bento-card-bg" style="background-image:url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=80')"></div>
           <div class="bento-card-overlay"></div>
@@ -226,35 +1203,33 @@
             <div class="bento-card-title">Células Fotovoltaicas Orgânicas</div>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- BANNER CTA -->
+  <!-- CTA -->
   <section class="cta-section animate">
     <h2>Pronto para transformar sua<br>pesquisa em realidade?</h2>
     <p>Nossa equipe de especialistas está pronta para orientar seu projeto no caminho da inovação e mercado.</p>
     <div class="cta-buttons">
-      <button class="btn-white">Entrar em Contato</button>
-      <button class="btn-outline-white" onclick="navigate(event,'projetos')">Acessar Editais Abertos</button>
+      <button class="btn-white" onclick="navigate(event,'contato')">Entrar em Contato</button>
+      <button class="btn-outline-white" onclick="navigate(event,'editais')">Acessar Editais Abertos</button>
     </div>
   </section>
 
-  <!-- FOOTER HOME -->
-  <footer class="footer">
+  <footer class="footer" id="rodape">
     <div class="footer-grid">
       <div>
-        <div class="footer-brand-name">Agência UNEB</div>
+        <div class="footer-brand-name">Agência UNEB de Inovação</div>
         <p class="footer-brand-desc">Impulsionando a inovação e o desenvolvimento tecnológico no estado da Bahia através da pesquisa acadêmica e parcerias estratégicas.</p>
       </div>
       <div>
         <div class="footer-col-title">Navegação</div>
         <ul class="footer-links">
-          <li><a href="#" onclick="navigate(event,'home')">Sobre Nós</a></li>
-          <li><a href="#" class="active-link" onclick="navigate(event,'projetos')">Ativos Tecnológicos</a></li>
-          <li><a href="#">Editais Abertos</a></li>
-          <li><a href="#">Projetos em Destaque</a></li>
+          <li><a href="#" onclick="navigate(event,'home')">Início</a></li>
+          <li><a href="#" onclick="navigate(event,'projetos')">Vitrine Tecnológica</a></li>
+          <li><a href="#" onclick="navigate(event,'editais')">Editais</a></li>
+          <li><a href="#" onclick="navigate(event,'eventos')">Eventos</a></li>
         </ul>
       </div>
       <div>
@@ -263,7 +1238,7 @@
           <li><a href="#">Privacidade</a></li>
           <li><a href="#">Termos de Uso</a></li>
           <li><a href="#">FAQ</a></li>
-          <li><a href="#">Portal UNEB</a></li>
+          <li><a href="https://portal.uneb.br" target="_blank">Portal UNEB</a></li>
         </ul>
       </div>
       <div>
@@ -279,15 +1254,12 @@
     </div>
     <div class="footer-bottom">© 2026 Agência UNEB de Inovação. Todos os direitos reservados.</div>
   </footer>
-
-</div><!-- fim #page-home -->
+</div><!-- /page-home -->
 
 <!-- =============================================
-     PÁGINA: PROJETOS
+     PÁGINA: VITRINE / PROJETOS
 ============================================= -->
 <div class="page" id="page-projetos">
-
-  <!-- Cabeçalho da página -->
   <header class="projects-header">
     <div class="projects-label">Portfólio Tecnológico</div>
     <div class="projects-title-row">
@@ -307,7 +1279,6 @@
     <p class="projects-desc">Explore o catálogo de patentes, softwares e tecnologias desenvolvidas pela UNEB, disponíveis para transferência e parcerias estratégicas.</p>
   </header>
 
-  <!-- Barra de filtros + ordenação (sticky) -->
   <div class="projects-toolbar">
     <div class="filter-chips" id="filterChips">
       <button class="chip active" data-filter="todos">Todos</button>
@@ -326,46 +1297,39 @@
     </div>
   </div>
 
-  <!-- Grid de projetos -->
   <div class="projects-grid-wrapper">
-    <div class="projects-grid" id="projectsGrid">
-      <!-- Preenchido via JS com os dados abaixo -->
-    </div>
-
-    <!-- Paginação -->
-    <p class="page-info" id="pageInfo">Exibindo 6 de 142 ativos</p>
+    <div class="projects-grid" id="projectsGrid"></div>
+    <p class="page-info" id="pageInfo"></p>
     <div class="pagination" id="pagination"></div>
   </div>
 
-  <!-- Banner "Não encontrou?" -->
   <section class="not-found-section">
     <h2>Não encontrou o que procurava?</h2>
     <p>Nossa equipe de propriedade intelectual pode auxiliar na busca personalizada por soluções específicas ou no desenvolvimento de PD&amp;I conjunta.</p>
     <div class="cta-buttons">
-      <button class="btn-primary">Entrar em Contato</button>
-      <button class="btn-outline-white">Transferência Tecnológica</button>
+      <button class="btn-primary" onclick="navigate(event,'contato')">Entrar em Contato</button>
+      <button class="btn-outline-white" style="color:var(--blue-mid);border-color:var(--blue-mid);" onmouseover="this.style.background='var(--blue-mid)';this.style.color='white'" onmouseout="this.style.background='';this.style.color='var(--blue-mid)'">Transferência Tecnológica</button>
     </div>
   </section>
 
-  <!-- Footer da página Projetos -->
   <footer class="footer">
     <div class="footer-grid">
       <div>
         <div class="footer-brand-name">Agência UNEB de Inovação</div>
-        <p class="footer-brand-desc">Impulsionando a inovação e o desenvolvimento tecnológico no estado da Bahia através da pesquisa acadêmica e parcerias estratégicas.</p>
+        <p class="footer-brand-desc">Impulsionando a inovação e o desenvolvimento tecnológico no estado da Bahia.</p>
       </div>
       <div>
         <div class="footer-col-title">Links Rápidos</div>
         <ul class="footer-links">
-          <li><a href="#" onclick="navigate(event,'home')">Projetos Ativos</a></li>
-          <li><a href="#">Editais</a></li>
-          <li><a href="#">Banco de Patentes</a></li>
+          <li><a href="#" onclick="navigate(event,'home')">Início</a></li>
+          <li><a href="#" onclick="navigate(event,'editais')">Editais</a></li>
+          <li><a href="#" onclick="navigate(event,'projetos')">Banco de Patentes</a></li>
         </ul>
       </div>
       <div>
         <div class="footer-col-title">Institucional</div>
         <ul class="footer-links">
-          <li><a href="#">Portal UNEB</a></li>
+          <li><a href="https://portal.uneb.br" target="_blank">Portal UNEB</a></li>
           <li><a href="#">Termos de Uso</a></li>
           <li><a href="#">Privacidade</a></li>
         </ul>
@@ -377,19 +1341,98 @@
     </div>
     <div class="footer-bottom">© 2026 Agência UNEB de Inovação. Universidade do Estado da Bahia.</div>
   </footer>
-
-</div><!-- fim #page-projetos -->
+</div><!-- /page-projetos -->
 
 <!-- =============================================
-     JAVASCRIPT
+     PÁGINA: EDITAIS
 ============================================= -->
+<div class="page" id="page-editais">
+  <div class="placeholder-page">
+    <div class="placeholder-icon">
+      <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+    </div>
+    <h1>Editais</h1>
+    <p>Os editais PIBATI e PROINOVAÇÃO estarão disponíveis em breve. Acompanhe as oportunidades de fomento à inovação na UNEB.</p>
+    <span class="tag-em-breve">Em breve</span>
+  </div>
+  <footer class="footer">
+    <div class="footer-bottom" style="padding:24px;">© 2026 Agência UNEB de Inovação.</div>
+  </footer>
+</div>
+
+<!-- =============================================
+     PÁGINA: PROPRIEDADE INTELECTUAL
+============================================= -->
+<div class="page" id="page-propriedade-intelectual">
+  <div class="placeholder-page">
+    <div class="placeholder-icon">
+      <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <path d="M9 12l2 2 4-4"/>
+      </svg>
+    </div>
+    <h1>Propriedade Intelectual</h1>
+    <p>Saiba como proteger sua criação: patentes, marcas, softwares e desenhos industriais. Conteúdo em construção.</p>
+    <span class="tag-em-breve">Em breve</span>
+  </div>
+  <footer class="footer">
+    <div class="footer-bottom" style="padding:24px;">© 2026 Agência UNEB de Inovação.</div>
+  </footer>
+</div>
+
+<!-- =============================================
+     PÁGINA: EVENTOS
+============================================= -->
+<div class="page" id="page-eventos">
+  <div class="placeholder-page">
+    <div class="placeholder-icon">
+      <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+    </div>
+    <h1>Eventos</h1>
+    <p>Workshops, semanas de ciência e tecnologia, e outros eventos da AUI estarão listados aqui em breve.</p>
+    <span class="tag-em-breve">Em breve</span>
+  </div>
+  <footer class="footer">
+    <div class="footer-bottom" style="padding:24px;">© 2026 Agência UNEB de Inovação.</div>
+  </footer>
+</div>
+
+<!-- =============================================
+     PÁGINA: CONTATO
+============================================= -->
+<div class="page" id="page-contato">
+  <div class="placeholder-page">
+    <div class="placeholder-icon">
+      <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+      </svg>
+    </div>
+    <h1>Contato</h1>
+    <p>Entre em contato com a equipe da Agência UNEB de Inovação pelo e-mail <strong>agencia.inovacao@uneb.br</strong> ou pelo telefone <strong>(71) 3117-2200</strong>.</p>
+    <a href="mailto:agencia.inovacao@uneb.br">
+      <button class="btn-primary" style="margin-top:8px;">Enviar e-mail</button>
+    </a>
+  </div>
+  <footer class="footer">
+    <div class="footer-bottom" style="padding:24px;">© 2026 Agência UNEB de Inovação.</div>
+  </footer>
+</div>
+
+</div><!-- /app -->
+
 <script>
-/* -----------------------------------------------
-   DADOS DOS PROJETOS
-   Array com todos os ativos. Cada item tem:
-   tipo, status, título, descrição, ref, imagem.
-   Filtros e paginação operam sobre este array.
------------------------------------------------ */
+/* ===== DADOS DOS PROJETOS ===== */
 const PROJECTS = [
   {
     tipo:'patente', status:'green', statusLabel:'Concedida',
@@ -401,90 +1444,94 @@ const PROJECTS = [
   {
     tipo:'software', status:'green', statusLabel:'Concedido',
     titulo:'Aplicativo Amamente',
-    desc:'O Amamente te atualiza sobre situações como Trauma Mamilar...',
+    desc:'O Amamente te atualiza sobre situações como Trauma Mamilar, auxiliando mães no processo de amamentação.',
     ref:'BR 2023 2746',
     img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMSXig6uOPmn0qgW0g7QC_-CHz1b7F75QSZA&s'
   },
   {
     tipo:'desenho', status:'green', statusLabel:'Concedido',
-    titulo:'Padrão Ornamental aplicado a/em jogo de tabuleiro "Mo Júbà": promovendo a saúde da pessoa idosa.',
-    desc:'Ferramenta lúdica e educativa, desenvolvida no contexto da Universidade do Estado da Bahia (UNEB), que utiliza elementos culturais africanos...',
+    titulo:'Padrão Ornamental aplicado a jogo de tabuleiro "Mo Júbà": promovendo a saúde da pessoa idosa',
+    desc:'Ferramenta lúdica e educativa que utiliza elementos culturais africanos para promover saúde e bem-estar.',
     ref:'BR 06 2025 2839',
     img:'https://i.postimg.cc/XY2S8d3T/Mojuba.png'
   },
   {
     tipo:'desenho', status:'green', statusLabel:'Concedido',
     titulo:'Imuniza Game',
-    desc:'Ferramenta gamificada desenvolvida para aumentar a conscientização sobre a importância da vacinação...',
+    desc:'Ferramenta gamificada desenvolvida para aumentar a conscientização sobre a importância da vacinação.',
     ref:'BR 10 2023 0556-4',
     img:'https://i.postimg.cc/hjQXgKMY/Imuniza-Game-Adesivos-Caixa-pdf.jpg'
   },
   {
-    tipo:'software', status:'yellow', statusLabel:'Concedido',
+    tipo:'software', status:'yellow', statusLabel:'Em análise',
     titulo:'Dizziness App',
-    desc:'Ferramenta móvel pioneira focada no tratamento e reabilitação de tonturas...',
+    desc:'Ferramenta móvel pioneira focada no tratamento e reabilitação de tonturas e distúrbios vestibulares.',
     ref:'BR 2023 0122-8',
     img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU1wPygCzLlwb9aA19_Y8ZRzJudgJYb7x1Sg&s'
   },
   {
     tipo:'marca', status:'green', statusLabel:'Em vigor',
     titulo:'Guerreiros de Saludis - Ataque ao stress',
-    desc:'Jogo de tabuleiro para educação em saúde...',
+    desc:'Jogo de tabuleiro para educação em saúde com foco em gestão do estresse e bem-estar.',
     ref:'BR 10 2024 0092-9',
     img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYksoMn5kn403XMpx2YMUI_0wXOH0vEBY7sQ&s'
   },
   {
     tipo:'marca', status:'green', statusLabel:'Em vigor',
-    titulo:'Sistema de inofrmação da Agricultura Familiar',
-    desc:'Sistema web que tem por objetivo apoiar o processo decisório de agricultures...',
-    ref:'BR 10 2024 0092-9',
+    titulo:'Sistema de Informação da Agricultura Familiar',
+    desc:'Sistema web de apoio ao processo decisório de agricultores familiares e cooperativas.',
+    ref:'BR 10 2024 0093-7',
     img:'https://i.postimg.cc/tR2F54wr/download.png'
-    },
+  },
   {
     tipo:'software', status:'green', statusLabel:'Concedido',
     titulo:'Museu Digital Saberes e Fazeres',
-    desc:'Museu Digital sobre os saberes e fazeres das trabalhadoras e dos trabalhadores por conta própria...',
-    ref:'BR 10 2024 0092-9',
+    desc:'Museu Digital sobre os saberes e fazeres das trabalhadoras e dos trabalhadores por conta própria.',
+    ref:'BR 10 2024 0094-5',
     img:'https://i.postimg.cc/pdmjVwZ5/Captura-de-tela-2026-04-16-132902.png'
   },
   {
     tipo:'software', status:'green', statusLabel:'Concedido',
-    titulo:'Pandora - Sistema Integrado de Gestão da Informação da Pós Graduação Stricto Sensu',
-    desc:'Software institucional, Gestão da Informação, Pós-Graduação Stricto Sensu...',
-    ref:'BR 10 2024 0092-9',
+    titulo:'Pandora — Sistema Integrado de Gestão da Pós-Graduação Stricto Sensu',
+    desc:'Software institucional para gestão da informação da Pós-Graduação Stricto Sensu da UNEB.',
+    ref:'BR 10 2024 0095-3',
     img:'https://i.postimg.cc/yNfzj54r/Captura-de-tela-2026-04-16-133713.png'
   },
 ];
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 9;
 let currentFilter = 'todos';
 let currentPage   = 1;
 let filteredData  = [...PROJECTS];
 
-/* -----------------------------------------------
-   renderProjects()
-   Filtra os dados pelo tipo selecionado,
-   fatia pelo número de página atual e
-   insere os cards no DOM.
------------------------------------------------ */
+/* ===== RENDER PROJECTS ===== */
 function renderProjects() {
   filteredData = currentFilter === 'todos'
     ? [...PROJECTS]
     : PROJECTS.filter(p => p.tipo === currentFilter);
 
-  const total = filteredData.length;
-  const start = (currentPage - 1) * ITEMS_PER_PAGE;
-  const slice = filteredData.slice(start, start + ITEMS_PER_PAGE);
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  if (query.length > 0) {
+    filteredData = filteredData.filter(p =>
+      p.titulo.toLowerCase().includes(query) ||
+      p.desc.toLowerCase().includes(query)
+    );
+  }
 
-  /* Atualiza o texto "Exibindo X de Y" */
-const exibindo = Math.min(currentPage * ITEMS_PER_PAGE, total);
+  const total   = filteredData.length;
+  const start   = (currentPage - 1) * ITEMS_PER_PAGE;
+  const slice   = filteredData.slice(start, start + ITEMS_PER_PAGE);
+  const exibindo = Math.min(currentPage * ITEMS_PER_PAGE, total);
 
-document.getElementById('pageInfo').textContent =
-  `Exibindo ${exibindo} de ${total} ativos`;
-  /* Renderiza os cards */
+  document.getElementById('pageInfo').textContent =
+    total > 0
+      ? `Exibindo ${start+1}–${exibindo} de ${total} ativos`
+      : 'Nenhum ativo encontrado para este filtro.';
+
   document.getElementById('projectsGrid').innerHTML = slice.map(p => `
     <div class="project-card">
-      <img class="project-card-img" src="${p.img}" alt="${p.titulo}" loading="lazy">
+      <img class="project-card-img" src="${p.img}" alt="${p.titulo}" loading="lazy"
+           onerror="this.style.background='#e2e8f0';this.style.display='flex';this.alt=''">
       <div class="project-card-body">
         <div class="project-card-meta">
           <span class="type-badge">${p.tipo.toUpperCase()}</span>
@@ -507,18 +1554,12 @@ document.getElementById('pageInfo').textContent =
   renderPagination(total);
 }
 
-/* -----------------------------------------------
-   renderPagination(total)
-   Gera os botões de paginação dinamicamente.
-   Mostra: ← | 1 | 2 | 3 | … | →
------------------------------------------------ */
 function renderPagination(total) {
   const pages = Math.ceil(total / ITEMS_PER_PAGE);
   const el    = document.getElementById('pagination');
   if (pages <= 1) { el.innerHTML = ''; return; }
 
   let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>←</button>`;
-
   for (let i = 1; i <= pages; i++) {
     if (i === 1 || i === pages || Math.abs(i - currentPage) <= 1) {
       html += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
@@ -526,12 +1567,10 @@ function renderPagination(total) {
       html += `<button class="page-btn" disabled>…</button>`;
     }
   }
-
   html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===pages?'disabled':''}>→</button>`;
   el.innerHTML = html;
 }
 
-/* Vai para a página N */
 function goPage(n) {
   const pages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
   if (n < 1 || n > pages) return;
@@ -540,11 +1579,7 @@ function goPage(n) {
   document.querySelector('.projects-header').scrollIntoView({ behavior:'smooth' });
 }
 
-/* -----------------------------------------------
-   Filtros — chips de categoria
-   Ao clicar em um chip, atualiza a classe
-   .active e re-renderiza os projetos.
------------------------------------------------ */
+/* Filter chips */
 document.getElementById('filterChips').addEventListener('click', e => {
   const chip = e.target.closest('.chip');
   if (!chip) return;
@@ -555,44 +1590,22 @@ document.getElementById('filterChips').addEventListener('click', e => {
   renderProjects();
 });
 
-/* -----------------------------------------------
-   Busca em tempo real
-   Filtra os projetos pelo texto digitado
-   comparando título e descrição.
------------------------------------------------ */
-document.getElementById('searchInput').addEventListener('input', e => {
-  const query = e.target.value.toLowerCase();
-
-  // Primeiro aplica o filtro selecionado
-  let baseData = currentFilter === 'todos'
-    ? [...PROJECTS]
-    : PROJECTS.filter(p => p.tipo === currentFilter);
-
-  // Depois aplica a busca dentro do filtro
-  if (query.length > 0) {
-    filteredData = baseData.filter(p =>
-      p.titulo.toLowerCase().includes(query) ||
-      p.desc.toLowerCase().includes(query)
-    );
-  } else {
-    filteredData = baseData;
-  }
-
+/* Search */
+document.getElementById('searchInput').addEventListener('input', () => {
   currentPage = 1;
   renderProjects();
 });
 
-/* -----------------------------------------------
-   navigate(event, page)
-   Troca entre as páginas Home e Projetos
-   sem recarregar o browser (SPA simples).
-   - Esconde todas as .page
-   - Exibe a .page correta com .page--active
-   - Atualiza os links .active da navbar
-   - Mostra/esconde a barra de busca
------------------------------------------------ */
+/* ===== NAVIGATE (SPA) ===== */
+const VALID_PAGES = ['home','projetos','editais','propriedade-intelectual','eventos','contato'];
+
 function navigate(event, page) {
   if (event) event.preventDefault();
+
+  if (!VALID_PAGES.includes(page)) {
+    console.warn('Página não encontrada:', page);
+    page = 'home';
+  }
 
   /* Esconde todas as páginas */
   document.querySelectorAll('.page').forEach(p => p.classList.remove('page--active'));
@@ -605,44 +1618,54 @@ function navigate(event, page) {
     a.classList.toggle('active', a.dataset.target === page);
   });
 
-  /* Barra de busca aparece apenas em Projetos */
+  /* Barra de busca visível só em Projetos */
   document.getElementById('navSearch').classList.toggle('visible', page === 'projetos');
 
-  /* Fecha menu mobile se estiver aberto */
+  /* Fecha menu mobile */
   document.getElementById('navLinks').classList.remove('open');
 
-  /* Rola para o topo */
+  /* Scroll ao topo */
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  /* Inicializa projetos ao entrar na página */
+  /* Inicializa projetos ao entrar */
   if (page === 'projetos') renderProjects();
+
+  /* Re-observa animações */
+  document.querySelectorAll('.animate:not(.visible)').forEach(el => observer.observe(el));
 }
 
-/* -----------------------------------------------
-   toggleMenu()
-   Abre/fecha o menu hamburguer no mobile.
------------------------------------------------ */
+/* ===== MENU MOBILE ===== */
 function toggleMenu() {
   document.getElementById('navLinks').classList.toggle('open');
 }
 
-/* -----------------------------------------------
-   Animação de scroll (Intersection Observer)
-   Observa elementos com .animate e adiciona
-   .visible quando entram no viewport, ativando
-   a transição CSS definida anteriormente.
------------------------------------------------ */
+/* ===== ACESSIBILIDADE ===== */
+let fontSize = 16;
+function adjustFont(delta) {
+  fontSize = Math.min(22, Math.max(12, fontSize + delta));
+  document.documentElement.style.setProperty('--font-size', fontSize + 'px');
+}
+
+function toggleContrast() {
+  document.body.classList.toggle('high-contrast');
+}
+
+/* ===== INTERSECTION OBSERVER (animações) ===== */
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.classList.add('visible');
-      observer.unobserve(e.target); // anima só uma vez
+      observer.unobserve(e.target);
     }
   });
-}, { threshold: 0.15 });
+}, { threshold: 0.1 });
 
 document.querySelectorAll('.animate').forEach(el => observer.observe(el));
 
+/* Inicializa a página inicial */
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+});
 </script>
 </body>
 </html>
