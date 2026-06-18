@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vitrine Tecnológica — Agência UNEB de Inovação</title>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-dark:  #0a2342;
+      --blue:       #1a4a8a;
+      --blue-mid:   #2563eb;
+      --blue-light: #3b82f6;
+      --green:      #059669;
+      --green-light:#10b981;
+      --teal:       #0891b2;
+      --gray-50:    #f8fafc;
+      --gray-100:   #f1f5f9;
+      --gray-200:   #e2e8f0;
+      --gray-400:   #94a3b8;
+      --gray-600:   #475569;
+      --gray-800:   #1e293b;
+      --white:      #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Atkinson Hyperlegible', sans-serif;
+      color: var(--gray-800);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ===== NAVBAR SIMPLES ===== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      height: 64px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo-agencia { height: 36px; object-fit: contain; }
+    .logo-uneb    { height: 32px; object-fit: contain; }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--gray-600);
+      text-decoration: none;
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-back:hover { color: var(--blue-mid); }
+    .navbar-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 7px 14px;
+      min-width: 240px;
+    }
+    .navbar-search input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.85rem;
+      width: 100%;
+      color: var(--gray-800);
+    }
+    .navbar-search svg { opacity: 0.45; flex-shrink: 0; }
+
+    /* ===== HEADER ===== */
+    .page-header {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, var(--teal) 100%);
+      color: var(--white);
+      padding: 56px 24px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .header-label {
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 10px;
+    }
+    .header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .page-header h1 {
+      font-family: 'Lexend', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+    }
+    .page-header h1 span { color: var(--green-light); }
+    .counter-pill {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 14px;
+      padding: 14px 22px;
+      flex-shrink: 0;
+    }
+    .counter-icon {
+      width: 42px; height: 42px;
+      background: var(--green);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white);
+    }
+    .counter-num {
+      font-family: 'Lexend', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+    .counter-label { font-size: 0.73rem; opacity: 0.7; margin-top: 3px; }
+    .page-header p {
+      opacity: 0.85;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      max-width: 580px;
+    }
+
+    /* ===== TOOLBAR ===== */
+    .toolbar {
+      position: sticky;
+      top: 64px;
+      z-index: 50;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .filter-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .chip {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      color: var(--gray-600);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.79rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .18s;
+    }
+    .chip:hover, .chip.active {
+      background: var(--blue-mid);
+      border-color: var(--blue-mid);
+      color: var(--white);
+    }
+    .sort-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.83rem;
+      color: var(--gray-600);
+      white-space: nowrap;
+    }
+    .sort-select {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.83rem;
+      outline: none;
+      cursor: pointer;
+      background: var(--white);
+    }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      background: var(--gray-50);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 12px 24px;
+    }
+    .stats-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--gray-600);
+    }
+    .stat-item strong {
+      font-family: 'Lexend', sans-serif;
+      font-weight: 700;
+      color: var(--blue-dark);
+    }
+    .stat-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .dot-green  { background: var(--green); }
+    .dot-yellow { background: #f59e0b; }
+    .dot-gray   { background: var(--gray-400); }
+
+    /* ===== GRID ===== */
+    .grid-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 24px 48px;
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 22px;
+      margin-bottom: 32px;
+    }
+
+    /* Card */
+    .project-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.09);
+    }
+    .card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      background: var(--gray-100);
+    }
+    .card-body { padding: 18px 20px 20px; }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .type-badge {
+      background: #e0f2fe;
+      color: var(--teal);
+      padding: 2px 9px;
+      border-radius: 4px;
+      font-size: 0.67rem;
+      font-family: 'Lexend', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+    .type-badge.patente  { background:#f0fdf4; color:#15803d; }
+    .type-badge.software { background:#e0f2fe; color:var(--teal); }
+    .type-badge.marca    { background:#fef3c7; color:#92400e; }
+    .type-badge.desenho  { background:#fce7f3; color:#9d174d; }
+
+    .status-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .status-dot.green  { background: var(--green); }
+    .status-dot.yellow { background: #f59e0b; }
+    .status-dot.red    { background: #ef4444; }
+    .status-text { font-size:0.77rem; color:var(--gray-600); }
+    .status-text.green  { color: var(--green); font-weight:600; }
+    .status-text.yellow { color: #d97706; font-weight:600; }
+
+    .card-title {
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: 8px;
+      line-height: 1.35;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-desc {
+      font-size: 0.82rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid var(--gray-100);
+    }
+    .card-ref {
+      font-size: 0.72rem;
+      color: var(--gray-400);
+      font-family: 'Lexend', sans-serif;
+    }
+    .link-details {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--blue-mid);
+      text-decoration: none;
+      font-size: 0.81rem;
+      font-weight: 600;
+      font-family: 'Lexend', sans-serif;
+    }
+    .link-details:hover { text-decoration: underline; }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 64px 24px;
+      color: var(--gray-400);
+    }
+    .empty-state svg { opacity: 0.3; margin-bottom: 16px; }
+    .empty-state p { font-size: 0.9rem; }
+
+    /* ===== PAGINATION ===== */
+    .page-info {
+      font-size: 0.82rem;
+      color: var(--gray-400);
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .pagination { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+    .page-btn {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      color: var(--gray-600);
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.83rem;
+      transition: all .15s;
+      font-family: 'Lexend', sans-serif;
+    }
+    .page-btn:hover:not(:disabled) { background: var(--gray-100); border-color: var(--gray-400); }
+    .page-btn.active { background: var(--blue-mid); border-color: var(--blue-mid); color: var(--white); font-weight: 700; }
+    .page-btn:disabled { opacity: 0.35; cursor: default; }
+
+    /* ===== CTA BANNER ===== */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+      color: var(--white);
+      text-align: center;
+      padding: 60px 24px;
+    }
+    .cta-banner h2 {
+      font-family: 'Lexend', sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .cta-banner p {
+      opacity: 0.85;
+      font-size: 0.95rem;
+      max-width: 480px;
+      margin: 0 auto 28px;
+      line-height: 1.65;
+    }
+    .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--green);
+      color: var(--white);
+      border: none;
+      padding: 12px 28px;
+      border-radius: 9px;
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-primary:hover { background: var(--green-light); }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.55);
+      padding: 11px 28px;
+      border-radius: 9px;
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--blue-dark);
+      color: rgba(255,255,255,0.7);
+      padding: 48px 24px 24px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 36px;
+      padding-bottom: 32px;
+    }
+    .footer-brand {
+      font-family: 'Lexend', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .footer-desc { font-size: 0.83rem; line-height: 1.65; }
+    .footer-col-title {
+      font-family: 'Lexend', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      margin-bottom: 12px;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 8px; }
+    .footer-links a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.84rem;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.78rem;
+      text-align: center;
+      opacity: 0.55;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .navbar-search { display: none; }
+      .header-row { flex-direction: column; }
+      .counter-pill { align-self: flex-start; }
+      .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+      .stats-inner { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a class="navbar-brand" href="index.html">
+    <img src="Logo-AUI-Azul-1-Logo-Azul-Horizontal-Fundo-Branco-1 (1).png" alt="Agência UNEB de Inovação" class="logo-agencia" onerror="this.style.display='none'">
+    <img src="logo_uneb.svg" alt="UNEB" class="logo-uneb" onerror="this.style.display='none'">
+  </a>
+
+  <div class="navbar-search">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Buscar patentes, softwares, marcas…">
+  </div>
+
+  <a class="nav-back" href="index.html">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    Voltar ao site
+  </a>
+</nav>
+
+<!-- HEADER -->
+<header class="page-header">
+  <div class="header-inner">
+    <div class="header-label">Portfólio Tecnológico — AUI/UNEB</div>
+    <div class="header-row">
+      <h1>Ativos de <span>Inovação</span></h1>
+      <div class="counter-pill">
+        <div class="counter-icon">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
+          </svg>
+        </div>
+        <div>
+          <div class="counter-num" id="counterNum">119</div>
+          <div class="counter-label">Ativos Registrados</div>
+        </div>
+      </div>
+    </div>
+    <p>Explore o catálogo de patentes, softwares, marcas e tecnologias desenvolvidas pela UNEB, disponíveis para transferência tecnológica e parcerias estratégicas.</p>
+  </div>
+</header>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-dot dot-green"></span>
+      <span><strong id="statConcedidos">0</strong> Concedidos / Em vigor</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-dot dot-yellow"></span>
+      <span><strong id="statPendentes">0</strong> Em análise</span>
+    </div>
+    <div class="stat-item">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="opacity:.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>Atualizado em <strong>Jun/2026</strong></span>
+    </div>
+  </div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="filter-chips" id="filterChips">
+    <button class="chip active" data-filter="todos">Todos</button>
+    <button class="chip" data-filter="patente">Patentes</button>
+    <button class="chip" data-filter="software">Software</button>
+    <button class="chip" data-filter="marca">Marcas</button>
+    <button class="chip" data-filter="desenho">Desenho Industrial</button>
+  </div>
+  <div class="sort-group">
+    <span>Ordenar:</span>
+    <select class="sort-select" id="sortSelect">
+      <option value="recentes">Mais recentes</option>
+      <option value="antigos">Mais antigos</option>
+      <option value="az">A–Z</option>
+    </select>
+  </div>
+</div>
+
+<!-- GRID -->
+<div class="grid-wrapper">
+  <div class="projects-grid" id="projectsGrid"></div>
+  <p class="page-info" id="pageInfo"></p>
+  <div class="pagination" id="pagination"></div>
+</div>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <h2>Não encontrou o que procurava?</h2>
+  <p>Nossa equipe de propriedade intelectual pode auxiliar na busca personalizada por soluções ou no desenvolvimento de PD&amp;I conjunta.</p>
+  <div class="cta-buttons">
+    <a href="mailto:agencia.inovacao@uneb.br">
+      <button class="btn-primary">Entrar em Contato</button>
+    </a>
+    <button class="btn-outline" onclick="alert('Em breve: página de Transferência Tecnológica')">Transferência Tecnológica</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Agência UNEB de Inovação</div>
+      <p class="footer-desc">Impulsionando a inovação e o desenvolvimento tecnológico no estado da Bahia através da pesquisa acadêmica e parcerias estratégicas.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Links</div>
+      <ul class="footer-links">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="index.html#editais">Editais</a></li>
+        <li><a href="https://portal.uneb.br" target="_blank">Portal UNEB</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contato</div>
+      <ul class="footer-links">
+        <li><a href="mailto:agencia.inovacao@uneb.br">agencia.inovacao@uneb.br</a></li>
+        <li><a href="tel:+557131172200">+55 (71) 3117-2200</a></li>
+        <li><span style="font-size:.83rem">Salvador, Bahia, Brasil</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Agência UNEB de Inovação. Universidade do Estado da Bahia.</div>
+</footer>
+
+<script>
+const PROJECTS = [
+  {
+    tipo:'patente', status:'green', statusLabel:'Concedida',
+    titulo:'Eletrodo tipo Wafer reativo quimicamente de Alumínio e Gálio e Método de fabricação do mesmo',
+    desc:'Compreende um leito de alumínio (1A) produzido a partir de um bloco de alumínio com paredes superior (1C), destinado a aplicações em semicondutores de alta eficiência.',
+    ref:'BR 07 2021 0145-2',
+    img:'https://thumbs.dreamstime.com/b/wafer-de-sil%C3%ADcio-para-fabrica%C3%A7%C3%A3o-semicondutores-circuitos-integrados-produtos-386806891.jpg',
+    ano: 2021
+  },
+  {
+    tipo:'software', status:'green', statusLabel:'Concedido',
+    titulo:'Aplicativo Amamente',
+    desc:'O Amamente auxilia mães no processo de amamentação, fornecendo orientações sobre situações como trauma mamilar, posicionamento e pega correta.',
+    ref:'BR 2023 2746',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMSXig6uOPmn0qgW0g7QC_-CHz1b7F75QSZA&s',
+    ano: 2023
+  },
+  {
+    tipo:'desenho', status:'green', statusLabel:'Concedido',
+    titulo:'Padrão Ornamental aplicado a jogo de tabuleiro "Mo Júbà": promovendo a saúde da pessoa idosa',
+    desc:'Ferramenta lúdica e educativa que utiliza elementos culturais africanos para promover saúde, bem-estar e inclusão da pessoa idosa.',
+    ref:'BR 06 2025 2839',
+    img:'https://i.postimg.cc/XY2S8d3T/Mojuba.png',
+    ano: 2025
+  },
+  {
+    tipo:'desenho', status:'green', statusLabel:'Concedido',
+    titulo:'Imuniza Game',
+    desc:'Ferramenta gamificada desenvolvida para aumentar a conscientização sobre a importância da vacinação, especialmente em populações jovens.',
+    ref:'BR 10 2023 0556-4',
+    img:'https://i.postimg.cc/hjQXgKMY/Imuniza-Game-Adesivos-Caixa-pdf.jpg',
+    ano: 2023
+  },
+  {
+    tipo:'software', status:'yellow', statusLabel:'Em análise',
+    titulo:'Dizziness App',
+    desc:'Ferramenta móvel pioneira focada no tratamento e reabilitação de tonturas e distúrbios vestibulares, apoiando profissionais de saúde e pacientes.',
+    ref:'BR 2023 0122-8',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU1wPygCzLlwb9aA19_Y8ZRzJudgJYb7x1Sg&s',
+    ano: 2023
+  },
+  {
+    tipo:'marca', status:'green', statusLabel:'Em vigor',
+    titulo:'Guerreiros de Saludis — Ataque ao Stress',
+    desc:'Jogo de tabuleiro para educação em saúde com foco em gestão do estresse, bem-estar emocional e promoção de hábitos saudáveis.',
+    ref:'BR 10 2024 0092-9',
+    img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYksoMn5kn403XMpx2YMUI_0wXOH0vEBY7sQ&s',
+    ano: 2024
+  },
+  {
+    tipo:'marca', status:'green', statusLabel:'Em vigor',
+    titulo:'Sistema de Informação da Agricultura Familiar',
+    desc:'Sistema web de apoio ao processo decisório de agricultores familiares e cooperativas, integrando dados de produção e distribuição.',
+    ref:'BR 10 2024 0093-7',
+    img:'https://i.postimg.cc/tR2F54wr/download.png',
+    ano: 2024
+  },
+  {
+    tipo:'software', status:'green', statusLabel:'Concedido',
+    titulo:'Museu Digital Saberes e Fazeres',
+    desc:'Museu Digital sobre os saberes e fazeres das trabalhadoras e dos trabalhadores por conta própria, preservando a memória cultural e laboral.',
+    ref:'BR 10 2024 0094-5',
+    img:'https://i.postimg.cc/pdmjVwZ5/Captura-de-tela-2026-04-16-132902.png',
+    ano: 2024
+  },
+  {
+    tipo:'software', status:'green', statusLabel:'Concedido',
+    titulo:'Pandora — Sistema Integrado de Gestão da Pós-Graduação Stricto Sensu',
+    desc:'Software institucional para gestão da informação da Pós-Graduação Stricto Sensu, integrando dados acadêmicos, financeiros e de pesquisa da UNEB.',
+    ref:'BR 10 2024 0095-3',
+    img:'https://i.postimg.cc/yNfzj54r/Captura-de-tela-2026-04-16-133713.png',
+    ano: 2024
+  },
+];
+
+const ITEMS_PER_PAGE = 9;
+let currentFilter = 'todos';
+let currentPage   = 1;
+let filteredData  = [...PROJECTS];
+
+/* Atualiza estatísticas */
+function updateStats() {
+  const concedidos = PROJECTS.filter(p => p.status === 'green').length;
+  const pendentes  = PROJECTS.filter(p => p.status === 'yellow').length;
+  document.getElementById('statConcedidos').textContent = concedidos;
+  document.getElementById('statPendentes').textContent  = pendentes;
+}
+
+function applySort(data) {
+  const val = document.getElementById('sortSelect').value;
+  const copy = [...data];
+  if (val === 'az')      return copy.sort((a,b) => a.titulo.localeCompare(b.titulo));
+  if (val === 'antigos') return copy.sort((a,b) => a.ano - b.ano);
+  return copy.sort((a,b) => b.ano - a.ano); /* recentes */
+}
+
+function renderProjects() {
+  let base = currentFilter === 'todos'
+    ? [...PROJECTS]
+    : PROJECTS.filter(p => p.tipo === currentFilter);
+
+  const query = document.getElementById('searchInput').value.toLowerCase().trim();
+  if (query) {
+    base = base.filter(p =>
+      p.titulo.toLowerCase().includes(query) ||
+      p.desc.toLowerCase().includes(query) ||
+      p.ref.toLowerCase().includes(query)
+    );
+  }
+
+  filteredData = applySort(base);
+
+  const total   = filteredData.length;
+  const start   = (currentPage - 1) * ITEMS_PER_PAGE;
+  const slice   = filteredData.slice(start, start + ITEMS_PER_PAGE);
+  const fim     = Math.min(start + ITEMS_PER_PAGE, total);
+
+  document.getElementById('pageInfo').textContent =
+    total > 0 ? `Exibindo ${start + 1}–${fim} de ${total} ativos` : '';
+
+  if (total === 0) {
+    document.getElementById('projectsGrid').innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1">
+        <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <p>Nenhum ativo encontrado para "<strong>${query || currentFilter}</strong>".</p>
+      </div>`;
+    document.getElementById('pagination').innerHTML = '';
+    return;
+  }
+
+  document.getElementById('projectsGrid').innerHTML = slice.map(p => `
+    <div class="project-card">
+      <img class="card-img" src="${p.img}" alt="${p.titulo}" loading="lazy"
+           onerror="this.src='';this.style.background='#e2e8f0'">
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="type-badge ${p.tipo}">${p.tipo.toUpperCase()}</span>
+          <span class="status-dot ${p.status}"></span>
+          <span class="status-text ${p.status}">${p.statusLabel}</span>
+        </div>
+        <div class="card-title">${p.titulo}</div>
+        <div class="card-desc">${p.desc}</div>
+        <div class="card-footer">
+          <span class="card-ref">Ref: ${p.ref}</span>
+          <a href="#" class="link-details">
+            Detalhes
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  renderPagination(total);
+}
+
+function renderPagination(total) {
+  const pages = Math.ceil(total / ITEMS_PER_PAGE);
+  const el    = document.getElementById('pagination');
+  if (pages <= 1) { el.innerHTML = ''; return; }
+
+  let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>←</button>`;
+  for (let i = 1; i <= pages; i++) {
+    if (i === 1 || i === pages || Math.abs(i - currentPage) <= 1) {
+      html += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+    } else if (Math.abs(i - currentPage) === 2) {
+      html += `<button class="page-btn" disabled>…</button>`;
+    }
+  }
+  html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===pages?'disabled':''}>→</button>`;
+  el.innerHTML = html;
+}
+
+function goPage(n) {
+  const pages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+  if (n < 1 || n > pages) return;
+  currentPage = n;
+  renderProjects();
+  document.querySelector('.page-header').scrollIntoView({ behavior:'smooth' });
+}
+
+/* Filter chips */
+document.getElementById('filterChips').addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  currentFilter = chip.dataset.filter;
+  currentPage   = 1;
+  renderProjects();
+});
+
+/* Sort */
+document.getElementById('sortSelect').addEventListener('change', () => {
+  currentPage = 1;
+  renderProjects();
+});
+
+/* Search */
+document.getElementById('searchInput').addEventListener('input', () => {
+  currentPage = 1;
+  renderProjects();
+});
+
+/* Init */
+updateStats();
+renderProjects();
+</script>
+</body>
+</html>
